@@ -294,7 +294,18 @@ const formatDate = (timestamp) => {
   return new Date(timestamp).toLocaleString()
 }
 
+// Check authentication on component mount
+const checkAuth = () => {
+  const isAuthenticated = localStorage.getItem('adminAuth') === 'true'
+  console.log('Admin component - checking auth:', isAuthenticated)
+  if (!isAuthenticated) {
+    console.log('Not authenticated - redirecting to login')
+    router.replace('/admin/login')
+  }
+}
+
 onMounted(() => {
+  checkAuth()
   loadProjects()
   loadSubmissions()
 })

@@ -54,16 +54,32 @@ const router = createRouter({
 
 // Navigation guard for admin routes
 router.beforeEach((to, from, next) => {
+  console.log('Navigation guard:', to.path, 'requiresAuth:', to.meta.requiresAuth)
+
+  const isAuthenticated = localStorage.getItem('adminAuth') === 'true'
+  console.log('Is authenticated:', isAuthenticated)
+
+  // Protect admin routes
   if (to.meta.requiresAuth) {
-    const isAuthenticated = localStorage.getItem('adminAuth') === 'true'
     if (!isAuthenticated) {
-      next('/admin/login')
+      console.log('Access denied - redirecting to login')
+      next({ path: '/admin/login', replace: true })
+      return
     } else {
+      console.log('Access granted')
       next()
+      return
     }
-  } else {
-    next()
   }
+
+  // Redirect to admin if already logged in and trying to access login page
+  if (to.path === '/admin/login' && isAuthenticated) {
+    console.log('Already logged in - redirecting to admin')
+    next({ path: '/admin', replace: true })
+    return
+  }
+
+  next()
 })
 
 export default router
