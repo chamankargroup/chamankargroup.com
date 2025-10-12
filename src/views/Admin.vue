@@ -409,7 +409,16 @@ const activeTab = ref('content')
 const projects = ref([])
 const submissions = ref([])
 const editingProject = ref(null)
-const websiteContent = ref({})
+const websiteContent = ref({
+  hero: { title: '', subtitle: '', description: '' },
+  whyChoose: [],
+  about: {
+    intro: '',
+    vision: { title: '', paragraphs: [] },
+    values: [],
+    expertise: []
+  }
+})
 const contentSaved = ref(false)
 
 const projectForm = ref({
