@@ -5,15 +5,13 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div class="text-center">
           <h1 class="text-4xl md:text-6xl font-bold mb-6">
-            Building Dreams, Creating Landmarks
+            {{ content.hero.title }}
           </h1>
           <p class="text-xl md:text-2xl mb-8 text-gray-100">
-            A trusted name in construction for over 25 years
+            {{ content.hero.subtitle }}
           </p>
           <p class="text-lg mb-8 max-w-3xl mx-auto">
-            M/s CHAMANKAR GROUP is a reputed & trusted name in the construction industry.
-            Over the years, we have been the pioneering force behind the rapidly changing skyline of Mumbai,
-            with developments that span the residential, retail, commercial & Government sectors.
+            {{ content.hero.description }}
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <router-link to="/projects" class="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
@@ -66,25 +64,10 @@
           <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Chamankar Group</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div class="text-center">
-            <div class="text-5xl mb-4">🏆</div>
-            <h3 class="text-xl font-bold mb-2">25+ Years</h3>
-            <p class="text-gray-600">Of Excellence in Construction</p>
-          </div>
-          <div class="text-center">
-            <div class="text-5xl mb-4">🏗️</div>
-            <h3 class="text-xl font-bold mb-2">Quality</h3>
-            <p class="text-gray-600">World-class Infrastructure</p>
-          </div>
-          <div class="text-center">
-            <div class="text-5xl mb-4">✨</div>
-            <h3 class="text-xl font-bold mb-2">Innovation</h3>
-            <p class="text-gray-600">Setting New Trends</p>
-          </div>
-          <div class="text-center">
-            <div class="text-5xl mb-4">🤝</div>
-            <h3 class="text-xl font-bold mb-2">Trust</h3>
-            <p class="text-gray-600">Reputed & Reliable</p>
+          <div v-for="item in content.whyChoose" :key="item.id" class="text-center">
+            <div class="text-5xl mb-4">{{ item.icon }}</div>
+            <h3 class="text-xl font-bold mb-2">{{ item.title }}</h3>
+            <p class="text-gray-600">{{ item.description }}</p>
           </div>
         </div>
       </div>
@@ -104,6 +87,14 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import { loadContent } from '@/utils/contentManager'
+
+const content = ref({
+  hero: { title: '', subtitle: '', description: '' },
+  whyChoose: []
+})
+
 const featuredProjects = [
   {
     id: 1,
@@ -124,6 +115,11 @@ const featuredProjects = [
     description: 'Modern government building with state-of-the-art facilities.'
   }
 ]
+
+onMounted(() => {
+  const loadedContent = loadContent()
+  content.value = loadedContent
+})
 </script>
 
 <style scoped>

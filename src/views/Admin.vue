@@ -15,9 +15,223 @@
       </div>
     </div>
 
+    <!-- Tabs -->
+    <div class="bg-white border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex space-x-8" aria-label="Tabs">
+          <button
+            @click="activeTab = 'content'"
+            :class="[activeTab === 'content' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm']"
+          >
+            Website Content
+          </button>
+          <button
+            @click="activeTab = 'projects'"
+            :class="[activeTab === 'projects' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm']"
+          >
+            Projects
+          </button>
+          <button
+            @click="activeTab = 'submissions'"
+            :class="[activeTab === 'submissions' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm']"
+          >
+            Contact Submissions
+          </button>
+        </nav>
+      </div>
+    </div>
+
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <!-- Add/Edit Project Form -->
+      <!-- Website Content Tab -->
+      <div v-if="activeTab === 'content'" class="space-y-8">
+        <!-- Hero Section Editor -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-6">Hero Section (Home Page)</h2>
+          <form @submit.prevent="saveContent" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Hero Title</label>
+              <input
+                type="text"
+                v-model="websiteContent.hero.title"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Hero Subtitle</label>
+              <input
+                type="text"
+                v-model="websiteContent.hero.subtitle"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Hero Description</label>
+              <textarea
+                v-model="websiteContent.hero.description"
+                rows="3"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              ></textarea>
+            </div>
+          </form>
+        </div>
+
+        <!-- Why Choose Section Editor -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-6">Why Choose Us (Home Page)</h2>
+          <div class="space-y-6">
+            <div v-for="(item, index) in websiteContent.whyChoose" :key="item.id" class="border border-gray-200 rounded-lg p-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Icon (Emoji)</label>
+                  <input
+                    type="text"
+                    v-model="item.icon"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  >
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                  <input
+                    type="text"
+                    v-model="item.title"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  >
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <input
+                    type="text"
+                    v-model="item.description"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Section Editor -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-6">About Us Page</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Company Introduction</label>
+              <textarea
+                v-model="websiteContent.about.intro"
+                rows="3"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Vision Title</label>
+              <input
+                type="text"
+                v-model="websiteContent.about.vision.title"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              >
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Vision Paragraphs</label>
+              <div v-for="(paragraph, index) in websiteContent.about.vision.paragraphs" :key="index" class="mb-2">
+                <textarea
+                  v-model="websiteContent.about.vision.paragraphs[index]"
+                  rows="2"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  :placeholder="'Paragraph ' + (index + 1)"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Core Values -->
+            <div class="mt-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Core Values</h3>
+              <div class="space-y-4">
+                <div v-for="value in websiteContent.about.values" :key="value.id" class="border border-gray-200 rounded-lg p-4">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Icon</label>
+                      <input
+                        type="text"
+                        v-model="value.icon"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                      <input
+                        type="text"
+                        v-model="value.title"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                      <input
+                        type="text"
+                        v-model="value.description"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Expertise -->
+            <div class="mt-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Expertise</h3>
+              <div class="space-y-4">
+                <div v-for="expertise in websiteContent.about.expertise" :key="expertise.id" class="border border-gray-200 rounded-lg p-4">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Icon</label>
+                      <input
+                        type="text"
+                        v-model="expertise.icon"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                      <input
+                        type="text"
+                        v-model="expertise.title"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                      <input
+                        type="text"
+                        v-model="expertise.description"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <button
+            @click="saveContent"
+            class="w-full bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+          >
+            Save All Website Content
+          </button>
+          <p v-if="contentSaved" class="text-green-600 text-center mt-4 font-medium">Content saved successfully!</p>
+        </div>
+      </div>
+
+      <!-- Projects Tab -->
+      <div v-if="activeTab === 'projects'" class="space-y-8">
+        <!-- Add/Edit Project Form -->
       <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
         <h2 class="text-xl font-bold text-gray-900 mb-6">{{ editingProject ? 'Edit Project' : 'Add New Project' }}</h2>
 
@@ -157,8 +371,10 @@
         </div>
       </div>
 
-      <!-- Contact Form Submissions -->
-      <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+      </div>
+
+      <!-- Contact Submissions Tab -->
+      <div v-if="activeTab === 'submissions'" class="bg-white rounded-lg shadow-lg p-6">
         <h2 class="text-xl font-bold text-gray-900 mb-6">Contact Form Submissions ({{ submissions.length }})</h2>
 
         <div v-if="submissions.length === 0" class="text-center py-8 text-gray-500">
@@ -186,12 +402,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { loadContent, saveContent as saveContentToStorage } from '@/utils/contentManager'
 
 const router = useRouter()
 
+const activeTab = ref('content')
 const projects = ref([])
 const submissions = ref([])
 const editingProject = ref(null)
+const websiteContent = ref({})
+const contentSaved = ref(false)
 
 const projectForm = ref({
   name: '',
@@ -294,6 +514,19 @@ const formatDate = (timestamp) => {
   return new Date(timestamp).toLocaleString()
 }
 
+// Content Management
+const saveContent = () => {
+  saveContentToStorage(websiteContent.value)
+  contentSaved.value = true
+  setTimeout(() => {
+    contentSaved.value = false
+  }, 3000)
+}
+
+const loadWebsiteContent = () => {
+  websiteContent.value = loadContent()
+}
+
 // Check authentication on component mount
 const checkAuth = () => {
   const isAuthenticated = localStorage.getItem('adminAuth') === 'true'
@@ -308,6 +541,7 @@ onMounted(() => {
   checkAuth()
   loadProjects()
   loadSubmissions()
+  loadWebsiteContent()
 })
 </script>
 
