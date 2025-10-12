@@ -32,15 +32,20 @@
             >
           </div>
 
-          <div v-if="errorMessage" class="text-red-600 text-sm text-center">
+          <div v-if="errorMessage" class="text-red-600 text-sm text-center font-medium">
             {{ errorMessage }}
+          </div>
+
+          <div v-if="successMessage" class="text-green-600 text-sm text-center font-medium">
+            {{ successMessage }}
           </div>
 
           <button
             type="submit"
-            class="w-full bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+            :disabled="isLoading"
+            class="w-full bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Sign In
+            {{ isLoading ? 'Signing In...' : 'Sign In' }}
           </button>
         </form>
 
@@ -72,17 +77,36 @@ const credentials = ref({
 })
 
 const errorMessage = ref('')
+const successMessage = ref('')
+const isLoading = ref(false)
 
-const handleLogin = () => {
+const handleLogin = async () => {
+  console.log('Login attempt:', credentials.value.username)
+  isLoading.value = true
+  errorMessage.value = ''
+  successMessage.value = ''
+
+  // Simulate async operation
+  await new Promise(resolve => setTimeout(resolve, 500))
+
   // Simple authentication (in production, use proper backend authentication)
   if (credentials.value.username === 'admin' && credentials.value.password === 'chamankar2024') {
+    console.log('Login successful!')
     localStorage.setItem('adminAuth', 'true')
-    router.push('/admin')
+    successMessage.value = 'Login successful! Redirecting...'
+
+    // Redirect after showing success message
+    setTimeout(async () => {
+      isLoading.value = false
+      await router.replace('/admin')
+    }, 800)
   } else {
-    errorMessage.value = 'Invalid username or password'
+    console.log('Login failed - invalid credentials')
+    isLoading.value = false
+    errorMessage.value = 'Invalid username or password. Please try again.'
     setTimeout(() => {
       errorMessage.value = ''
-    }, 3000)
+    }, 4000)
   }
 }
 </script>
