@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Chamankar Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sand: #e8ddd4;
+            --sand-light: #f5f1ec;
+            --clay: #c4936a;
+            --clay-dark: #a67b52;
+            --sage: #a8b5a0;
+            --sage-dark: #8a9b80;
+            --earth: #5c524a;
+            --text-dark: #2e2a26;
+            --text-medium: #5a544e;
+            --text-light: #8a847e;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--sand-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 241, 236, 0.95);
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--clay);
+        }
+
+        .nav-cta {
+            padding: 14px 36px;
+            background: var(--earth);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--clay);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 180px 60px 100px;
+            text-align: center;
+            background: var(--sand-light);
+        }
+
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(196, 147, 106, 0.15);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--clay-dark);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .page-description {
+            font-size: 18px;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Filter Tabs */
+        .filter-section {
+            padding: 0 60px 60px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 14px 32px;
+            background: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--clay);
+            color: var(--white);
+        }
+
+        /* Projects Grid */
+        .projects-section {
+            padding: 60px;
+            background: var(--white);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--sand-light);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .project-card.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .project-image {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--sand), #d4c4b0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card.featured .project-image {
+            aspect-ratio: 16/10;
+        }
+
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(46,42,38,0.8) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-quick-info {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            color: var(--white);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s;
+        }
+
+        .project-card:hover .project-quick-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .quick-stats {
+            display: flex;
+            gap: 24px;
+            font-size: 13px;
+        }
+
+        .image-placeholder {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .project-info {
+            padding: 28px;
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(196, 147, 106, 0.15);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--clay-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .project-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .project-card.featured .project-name {
+            font-size: 32px;
+        }
+
+        .project-location {
+            font-size: 14px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 24px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--sand);
+        }
+
+        .meta-item {
+            font-size: 13px;
+            color: var(--text-medium);
+        }
+
+        .meta-item span {
+            color: var(--text-light);
+            margin-right: 6px;
+        }
+
+        /* Load More */
+        .load-more {
+            text-align: center;
+            padding: 80px 60px;
+            background: var(--white);
+        }
+
+        .load-btn {
+            padding: 18px 48px;
+            background: transparent;
+            border: 2px solid var(--earth);
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--earth);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .load-btn:hover {
+            background: var(--earth);
+            color: var(--white);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 140px 60px;
+            background: linear-gradient(135deg, var(--clay), var(--clay-dark));
+            text-align: center;
+            color: var(--white);
+            border-radius: 60px 60px 0 0;
+            margin-top: -60px;
+            position: relative;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 56px;
+            background: var(--white);
+            color: var(--clay-dark);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 60px;
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 14px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .projects-grid { grid-template-columns: 1fr 1fr; }
+            .project-card.featured { grid-column: span 2; grid-row: auto; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-title { font-size: 42px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .project-card.featured { grid-column: auto; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="logo">Chamankar</a>
+        <ul class="nav-links">
+            <li><a href="projects.html" class="active">Projects</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="awards.html">Awards</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="page-badge">Our Portfolio</div>
+        <h1 class="page-title">Projects</h1>
+        <p class="page-description">Discover our collection of thoughtfully designed spaces that harmonize with their environment and enhance the lives of those who inhabit them.</p>
+    </header>
+
+    <!-- Filter -->
+    <section class="filter-section">
+        <button class="filter-btn active">All Projects</button>
+        <button class="filter-btn">Residential</button>
+        <button class="filter-btn">Commercial</button>
+        <button class="filter-btn">Government</button>
+        <button class="filter-btn">Interior</button>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-section">
+        <div class="projects-grid">
+            <!-- Featured Project -->
+            <div class="project-card featured">
+                <div class="project-image">
+                    <span class="image-placeholder">Featured Project Image</span>
+                    <div class="project-overlay"></div>
+                    <div class="project-quick-info">
+                        <div class="quick-stats">
+                            <span>5,200 sq.ft</span>
+                            <span>Completed 2024</span>
+                            <span>LEED Certified</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Residential</span>
+                    <h3 class="project-name">The Horizon Residences</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Worli Sea Face, Mumbai
+                    </p>
+                    <div class="project-meta">
+                        <div class="meta-item"><span>Type:</span> Luxury Apartments</div>
+                        <div class="meta-item"><span>Floors:</span> 45</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Commercial</span>
+                    <h3 class="project-name">Vertex Business Park</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        BKC, Mumbai
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Government</span>
+                    <h3 class="project-name">Civic Community Center</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Andheri, Mumbai
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Residential</span>
+                    <h3 class="project-name">Palm Grove Villas</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Powai, Mumbai
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Commercial</span>
+                    <h3 class="project-name">Trade Plaza</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Lower Parel, Mumbai
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Interior</span>
+                    <h3 class="project-name">Luxe Penthouse</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Malabar Hill, Mumbai
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 7 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Government</span>
+                    <h3 class="project-name">Municipal Library</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Dadar, Mumbai
+                    </p>
+                </div>
+            </div>
+
+            <!-- Project 8 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Residential</span>
+                    <h3 class="project-name">Green Valley Estate</h3>
+                    <p class="project-location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Bandra, Mumbai
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Load More -->
+    <section class="load-more">
+        <button class="load-btn">Load More Projects</button>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Have a Project in Mind?</h2>
+        <p>Let's discuss your vision and create something beautiful together.</p>
+        <a href="contact.html" class="cta-btn">Start Your Project</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Chamankar</div>
+                <p class="footer-tagline">Creating harmonious architecture that flows with life. Award-winning design studio based in Mumbai.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Navigate</h4>
+                <ul class="footer-links">
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                    <li><a href="#">Mumbai, India</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Chamankar Group</span>
+            <span>Privacy | Terms</span>
+        </div>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

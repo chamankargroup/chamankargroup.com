@@ -7,30 +7,39 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#fef3e7',
-          100: '#fde1bf',
-          200: '#fbcd97',
-          300: '#f9b96f',
-          400: '#f7a547',
-          500: '#f5911f',
-          600: '#c47419',
-          700: '#935713',
-          800: '#623a0d',
-          900: '#311d06',
+        // Organic Flow Color Palette
+        sand: {
+          DEFAULT: '#e8ddd4',
+          light: '#f5f1ec',
+          dark: '#d4c4b0',
         },
-        secondary: {
-          50: '#f0f5ff',
-          100: '#e0ebff',
-          200: '#c1d7ff',
-          300: '#a2c3ff',
-          400: '#83afff',
-          500: '#649bff',
-          600: '#507ccc',
-          700: '#3c5d99',
-          800: '#283e66',
-          900: '#141f33',
+        clay: {
+          DEFAULT: '#c4936a',
+          light: '#d4a87d',
+          dark: '#a67b52',
         },
+        sage: {
+          DEFAULT: '#a8b5a0',
+          light: '#c4cfbe',
+          dark: '#8a9b80',
+        },
+        earth: {
+          DEFAULT: '#5c524a',
+          light: '#7a6f65',
+          dark: '#3d3630',
+        },
+        // Text colors
+        'text-dark': '#2e2a26',
+        'text-medium': '#5a544e',
+        'text-light': '#8a847e',
+      },
+      fontFamily: {
+        'display': ['Playfair Display', 'Georgia', 'serif'],
+        'sans': ['Outfit', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        '4xl': '2rem',
+        '5xl': '2.5rem',
       },
     },
   },

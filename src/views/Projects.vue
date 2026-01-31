@@ -1,59 +1,102 @@
 <template>
   <div class="projects">
     <!-- Page Header -->
-    <section class="bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">Our Projects</h1>
-        <p class="text-xl text-center text-gray-100">Transforming Mumbai's skyline for over 25 years</p>
+    <section class="relative pt-32 pb-20 px-6 lg:px-8 bg-gradient-to-b from-sand-light to-sand">
+      <div class="max-w-7xl mx-auto text-center">
+        <span class="section-tag">Our Portfolio</span>
+        <h1 class="font-display text-5xl md:text-6xl font-normal mb-6">Our Projects</h1>
+        <p class="text-text-medium text-lg max-w-2xl mx-auto">
+          Discover our collection of thoughtfully designed spaces that harmonize with their surroundings.
+        </p>
+      </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="bg-white py-8 px-6 lg:px-8 border-b border-sand">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-wrap justify-center gap-3">
+          <button
+            v-for="filter in filters"
+            :key="filter"
+            @click="activeFilter = filter"
+            class="px-6 py-2.5 rounded-full text-sm font-medium transition-all"
+            :class="activeFilter === filter
+              ? 'bg-earth text-white'
+              : 'bg-sand-light text-text-medium hover:bg-sand'"
+          >
+            {{ filter }}
+          </button>
+        </div>
       </div>
     </section>
 
     <!-- Projects Grid -->
-    <section class="py-16 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div v-if="projects.length === 0" class="text-center py-12">
-          <div class="text-6xl mb-4">🏗️</div>
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">No Projects Available</h3>
-          <p class="text-gray-600">Projects will be added soon.</p>
+    <section class="py-16 lg:py-24 bg-white px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div v-if="filteredProjects.length === 0" class="text-center py-20">
+          <div class="w-20 h-20 bg-sand rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8a847e" stroke-width="2">
+              <path d="M3 21h18M9 21V8l-6 4v9M9 8l6-4 6 4M15 21V8"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-2xl mb-3">No Projects Available</h3>
+          <p class="text-text-light">Projects will be added soon.</p>
         </div>
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="project in projects" :key="project.id" class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer" @click="openProjectModal(project)">
+          <div
+            v-for="project in filteredProjects"
+            :key="project.id"
+            @click="openProjectModal(project)"
+            class="organic-card cursor-pointer overflow-hidden group"
+          >
             <!-- Project Image -->
-            <div class="h-64 overflow-hidden bg-gray-200 relative">
-              <img v-if="getProjectMainImage(project)" :src="getProjectMainImage(project)" :alt="project.name" class="w-full h-full object-cover">
-              <div v-else class="w-full h-full bg-gradient-to-br from-primary-200 to-secondary-200 flex items-center justify-center">
-                <span class="text-7xl">🏢</span>
+            <div class="aspect-[4/3] overflow-hidden bg-sand relative rounded-t-3xl">
+              <img
+                v-if="getProjectMainImage(project)"
+                :src="getProjectMainImage(project)"
+                :alt="project.name"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              >
+              <div v-else class="w-full h-full bg-gradient-to-br from-sand to-sand-dark flex items-center justify-center">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8a847e" stroke-width="1.5">
+                  <rect x="4" y="2" width="16" height="20" rx="2"/>
+                  <path d="M9 22v-4h6v4"/>
+                  <line x1="8" y1="6" x2="16" y2="6"/>
+                  <line x1="8" y1="10" x2="16" y2="10"/>
+                  <line x1="8" y1="14" x2="12" y2="14"/>
+                </svg>
               </div>
               <!-- Image Badge -->
-              <div v-if="getImageCount(project) > 1" class="absolute top-3 right-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+              <div v-if="getImageCount(project) > 1" class="absolute top-4 right-4 bg-earth/90 text-white px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <path d="M21 15l-5-5L5 21"/>
                 </svg>
-                {{ getImageCount(project) }} Photos
+                {{ getImageCount(project) }}
               </div>
             </div>
 
             <!-- Project Details -->
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2 text-gray-900">{{ project.name }}</h3>
-              <p class="text-sm text-primary-600 mb-3 flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            <div class="p-7">
+              <span class="inline-block px-4 py-1.5 bg-clay/15 rounded-full text-xs font-semibold text-clay-dark uppercase tracking-wide mb-3">
+                {{ project.type }}
+              </span>
+              <h3 class="font-display text-2xl font-medium mb-2 group-hover:text-clay transition-colors">{{ project.name }}</h3>
+              <p class="text-text-light text-sm flex items-center gap-1.5 mb-4">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
                 </svg>
                 {{ project.location }}
               </p>
-              <p class="text-gray-700 text-sm mb-4 line-clamp-3">{{ project.description }}</p>
-              <div class="flex items-center justify-between">
-                <div v-if="project.type" class="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-xs font-semibold rounded-full">
-                  {{ project.type }}
-                </div>
-                <button class="text-primary-600 hover:text-primary-700 text-sm font-semibold flex items-center">
-                  View Details
-                  <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
+              <p class="text-text-medium text-sm leading-relaxed line-clamp-2">{{ project.description }}</p>
+              <div class="mt-5 flex items-center text-clay text-sm font-medium group-hover:gap-2 transition-all">
+                View Details
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ml-1">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
               </div>
             </div>
           </div>
@@ -69,12 +112,15 @@
     />
 
     <!-- CTA Section -->
-    <section class="py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Interested in Our Work?</h2>
-        <p class="text-xl text-gray-600 mb-8">Let's discuss your next project</p>
-        <router-link to="/contact" class="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors">
-          Contact Us
+    <section class="py-24 lg:py-32 bg-sand-light px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center">
+        <span class="section-tag">Let's Work Together</span>
+        <h2 class="section-title">Interested in Our Work?</h2>
+        <p class="text-text-medium text-lg mb-10">
+          Let's discuss how we can bring your architectural vision to life.
+        </p>
+        <router-link to="/contact" class="btn-primary">
+          Start a Conversation
         </router-link>
       </div>
     </section>
@@ -82,12 +128,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import ProjectModal from '../components/ProjectModal.vue'
 
 const projects = ref([])
 const showModal = ref(false)
 const selectedProject = ref({})
+const activeFilter = ref('All')
+
+const filters = ['All', 'Residential', 'Commercial', 'Government']
+
+const filteredProjects = computed(() => {
+  if (activeFilter.value === 'All') {
+    return projects.value
+  }
+  return projects.value.filter(p => p.type === activeFilter.value)
+})
 
 const loadProjects = () => {
   const storedProjects = localStorage.getItem('chamankarProjects')
@@ -206,9 +262,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.line-clamp-3 {
+.line-clamp-2 {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

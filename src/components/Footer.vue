@@ -1,39 +1,92 @@
 <template>
-  <footer class="bg-gray-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Company Info -->
-        <div>
-          <h3 class="text-xl font-bold mb-4 text-primary-400">CHAMANKAR GROUP</h3>
-          <p class="text-gray-400 text-sm">
-            A trusted name in the construction industry for over 25 years, building quality residential, commercial, and government projects across Mumbai.
+  <footer class="bg-text-dark text-white py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <!-- Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <!-- Brand Column -->
+        <div class="lg:col-span-1">
+          <h3 class="font-display text-3xl mb-5">Chamankar</h3>
+          <p class="text-white/60 text-sm leading-relaxed">
+            Creating harmonious architecture that flows with life. Award-winning design studio based in Mumbai.
           </p>
         </div>
 
-        <!-- Quick Links -->
+        <!-- Navigate Column -->
         <div>
-          <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-          <ul class="space-y-2">
-            <li><router-link to="/" class="text-gray-400 hover:text-primary-400 text-sm transition-colors">Home</router-link></li>
-            <li><router-link to="/about" class="text-gray-400 hover:text-primary-400 text-sm transition-colors">About Us</router-link></li>
-            <li><router-link to="/projects" class="text-gray-400 hover:text-primary-400 text-sm transition-colors">Projects</router-link></li>
-            <li><router-link to="/contact" class="text-gray-400 hover:text-primary-400 text-sm transition-colors">Contact</router-link></li>
+          <h4 class="text-xs font-semibold tracking-widest uppercase text-clay mb-6">Navigate</h4>
+          <ul class="space-y-3">
+            <li>
+              <router-link to="/projects" class="text-white/60 hover:text-white text-sm transition-colors">
+                Projects
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/about" class="text-white/60 hover:text-white text-sm transition-colors">
+                About
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/contact" class="text-white/60 hover:text-white text-sm transition-colors">
+                Contact
+              </router-link>
+            </li>
           </ul>
         </div>
 
-        <!-- Contact Info -->
+        <!-- Services Column -->
         <div>
-          <h3 class="text-xl font-bold mb-4">Contact Us</h3>
-          <ul class="space-y-2 text-sm text-gray-400">
-            <li>Mumbai, Maharashtra, India</li>
-            <li>Email: info@chamankargroup.com</li>
-            <li>Phone: +91 22 XXXX XXXX</li>
+          <h4 class="text-xs font-semibold tracking-widest uppercase text-clay mb-6">Services</h4>
+          <ul class="space-y-3">
+            <li>
+              <a href="#" class="text-white/60 hover:text-white text-sm transition-colors">
+                Residential
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-white/60 hover:text-white text-sm transition-colors">
+                Commercial
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-white/60 hover:text-white text-sm transition-colors">
+                Government
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact Column -->
+        <div>
+          <h4 class="text-xs font-semibold tracking-widest uppercase text-clay mb-6">Contact</h4>
+          <ul class="space-y-3">
+            <li>
+              <a href="mailto:info@chamankar.com" class="text-white/60 hover:text-white text-sm transition-colors">
+                info@chamankar.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+912212345678" class="text-white/60 hover:text-white text-sm transition-colors">
+                +91 22 1234 5678
+              </a>
+            </li>
+            <li>
+              <span class="text-white/60 text-sm">
+                Mumbai, India
+              </span>
+            </li>
           </ul>
         </div>
       </div>
 
-      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-        <p>&copy; {{ new Date().getFullYear() }} Chamankar Group. All rights reserved.</p>
+      <!-- Footer Bottom -->
+      <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <span class="text-white/40 text-sm">
+          &copy; {{ new Date().getFullYear() }} Chamankar Group
+        </span>
+        <div class="flex gap-6">
+          <a href="#" class="text-white/40 hover:text-white text-sm transition-colors">Privacy</a>
+          <a href="#" class="text-white/40 hover:text-white text-sm transition-colors">Terms</a>
+        </div>
       </div>
     </div>
   </footer>

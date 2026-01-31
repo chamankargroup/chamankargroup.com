@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Chamankar Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --sand: #e8ddd4;
+            --sand-light: #f5f1ec;
+            --clay: #c4936a;
+            --clay-dark: #a67b52;
+            --sage: #a8b5a0;
+            --sage-dark: #8a9b80;
+            --earth: #5c524a;
+            --text-dark: #2e2a26;
+            --text-medium: #5a544e;
+            --text-light: #8a847e;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--sand-light);
+            color: var(--text-dark);
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 241, 236, 0.95);
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--clay); }
+
+        .nav-cta {
+            padding: 14px 36px;
+            background: var(--earth);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover { background: var(--clay); }
+
+        /* Page Header */
+        .page-header {
+            padding: 180px 60px 100px;
+            text-align: center;
+        }
+
+        .page-badge {
+            display: inline-flex;
+            padding: 10px 24px;
+            background: rgba(196, 147, 106, 0.15);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--clay-dark);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .page-description {
+            font-size: 18px;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Main Services */
+        .services-main {
+            padding: 80px 60px;
+            background: var(--white);
+        }
+
+        .service-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto 120px;
+        }
+
+        .service-block:nth-child(even) {
+            direction: rtl;
+        }
+
+        .service-block:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .service-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-image {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--sand), #d4c4b0);
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-placeholder {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .service-content .service-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            color: var(--sand);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .service-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .service-content p {
+            font-size: 16px;
+            color: var(--text-medium);
+            line-height: 1.9;
+            margin-bottom: 32px;
+        }
+
+        .service-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .feature-item::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--clay);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 140px 60px;
+            background: var(--sage);
+            position: relative;
+        }
+
+        .process-section::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 0;
+            right: 0;
+            height: 160px;
+            background: var(--white);
+            border-radius: 0 0 50% 50%;
+        }
+
+        .process-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .process-header p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .process-step:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-8px);
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--sage-dark);
+        }
+
+        .process-step h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .process-step p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+        }
+
+        /* Additional Services */
+        .additional-section {
+            padding: 140px 60px;
+            background: var(--sand-light);
+        }
+
+        .additional-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .additional-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+        }
+
+        .additional-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .additional-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .additional-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        }
+
+        .additional-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--clay), var(--clay-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .additional-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .additional-card p {
+            font-size: 14px;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 140px 60px;
+            background: linear-gradient(135deg, var(--clay), var(--clay-dark));
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 56px;
+            background: var(--white);
+            color: var(--clay-dark);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 60px;
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 24px;
+        }
+
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--white); }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .service-block { grid-template-columns: 1fr; }
+            .service-block:nth-child(even) { direction: ltr; }
+            .process-grid { grid-template-columns: repeat(2, 1fr); }
+            .additional-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-title { font-size: 42px; }
+            .process-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="logo">Chamankar</a>
+        <ul class="nav-links">
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="awards.html">Awards</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="page-badge">What We Do</div>
+        <h1 class="page-title">Our Services</h1>
+        <p class="page-description">Comprehensive architectural solutions that blend creativity, functionality, and sustainability to create spaces that inspire.</p>
+    </header>
+
+    <!-- Main Services -->
+    <section class="services-main">
+        <div class="service-block">
+            <div class="service-image">
+                <span class="image-placeholder">Residential Image</span>
+            </div>
+            <div class="service-content">
+                <div class="service-number">01</div>
+                <h2>Residential Design</h2>
+                <p>We create homes that embrace natural light, organic forms, and sustainable living principles. Each residence is uniquely crafted to reflect the personality and lifestyle of its inhabitants.</p>
+                <div class="service-features">
+                    <div class="feature-item">Custom Home Design</div>
+                    <div class="feature-item">Luxury Apartments</div>
+                    <div class="feature-item">Villa Complexes</div>
+                    <div class="feature-item">Interior Architecture</div>
+                    <div class="feature-item">Landscape Integration</div>
+                    <div class="feature-item">Smart Home Design</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-block">
+            <div class="service-image">
+                <span class="image-placeholder">Commercial Image</span>
+            </div>
+            <div class="service-content">
+                <div class="service-number">02</div>
+                <h2>Commercial Architecture</h2>
+                <p>Workplaces that inspire creativity and foster well-being through biophilic design. We create environments where businesses thrive and employees flourish.</p>
+                <div class="service-features">
+                    <div class="feature-item">Office Complexes</div>
+                    <div class="feature-item">Retail Spaces</div>
+                    <div class="feature-item">Mixed-Use Developments</div>
+                    <div class="feature-item">Tech Parks</div>
+                    <div class="feature-item">Hospitality Design</div>
+                    <div class="feature-item">Co-Working Spaces</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-block">
+            <div class="service-image">
+                <span class="image-placeholder">Government Image</span>
+            </div>
+            <div class="service-content">
+                <div class="service-number">03</div>
+                <h2>Public Infrastructure</h2>
+                <p>Community spaces that connect people with nature and promote sustainable urban living. Architecture that serves the public good with dignity and purpose.</p>
+                <div class="service-features">
+                    <div class="feature-item">Civic Centers</div>
+                    <div class="feature-item">Educational Facilities</div>
+                    <div class="feature-item">Healthcare Buildings</div>
+                    <div class="feature-item">Cultural Institutions</div>
+                    <div class="feature-item">Transport Hubs</div>
+                    <div class="feature-item">Public Parks</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="process-section">
+        <div class="process-header">
+            <h2>Our Process</h2>
+            <p>A collaborative journey from concept to completion</p>
+        </div>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3>Discovery</h3>
+                <p>We listen, understand your vision, analyze the site, and identify opportunities.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3>Design</h3>
+                <p>Concepts take shape through sketches, 3D models, and detailed planning.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3>Development</h3>
+                <p>Technical drawings, material selection, and coordination with consultants.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h3>Delivery</h3>
+                <p>Construction oversight ensuring quality execution of the design vision.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Services -->
+    <section class="additional-section">
+        <div class="additional-header">
+            <h2>Additional Services</h2>
+        </div>
+        <div class="additional-grid">
+            <div class="additional-card">
+                <div class="additional-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                </div>
+                <h3>Interior Design</h3>
+                <p>Complete interior solutions that extend our architectural philosophy inside your spaces.</p>
+            </div>
+            <div class="additional-card">
+                <div class="additional-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                <h3>Project Management</h3>
+                <p>End-to-end project oversight ensuring timely delivery within budget.</p>
+            </div>
+            <div class="additional-card">
+                <div class="additional-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    </svg>
+                </div>
+                <h3>Sustainability Consulting</h3>
+                <p>LEED certification guidance and green building strategies.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Start Your Project?</h2>
+        <p>Let's discuss how we can bring your architectural vision to life.</p>
+        <a href="contact.html" class="cta-btn">Get in Touch</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Chamankar</div>
+                <p class="footer-tagline">Creating harmonious architecture that flows with life. Award-winning design studio based in Mumbai.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Navigate</h4>
+                <ul class="footer-links">
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                    <li><a href="#">Mumbai, India</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Chamankar Group</span>
+            <span>Privacy | Terms</span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,153 @@
+{
+  "company": {
+    "name": "Chamankar Group",
+    "tagline": "Where Nature Meets Structure",
+    "description": "Creating harmonious spaces that flow with life. For 25 years, we've designed architecture that breathes with its environment.",
+    "longDescription": "M/s CHAMANKAR GROUP is a reputed & trusted name in the construction industry. Over the years, we have been the pioneering force behind the rapidly changing skyline of Mumbai, with developments that span the residential, retail, commercial & Government sectors.",
+    "founded": "1999",
+    "yearsExperience": "25+",
+    "projectsCompleted": "150+",
+    "awardsWon": "40+",
+    "teamMembers": "200+"
+  },
+  "hero": {
+    "badge": "Architecture & Design Studio",
+    "title": "Where Nature Meets",
+    "titleHighlight": "Structure",
+    "subtitle": "Creating harmonious spaces that flow with life. For 25 years, we've designed architecture that breathes with its environment."
+  },
+  "navigation": [
+    { "name": "Projects", "path": "/projects" },
+    { "name": "Services", "path": "/services" },
+    { "name": "About", "path": "/about" },
+    { "name": "Team", "path": "/team" },
+    { "name": "Contact", "path": "/contact" }
+  ],
+  "stats": [
+    { "number": "25+", "label": "Years of Excellence" },
+    { "number": "150+", "label": "Projects Delivered" },
+    { "number": "40+", "label": "Industry Awards" },
+    { "number": "200+", "label": "Team Members" }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "icon": "home",
+      "title": "Residential Design",
+      "description": "Homes that embrace natural light, organic forms, and sustainable living principles.",
+      "details": "From luxury apartments to bungalows, we create living spaces that feel like home from day one."
+    },
+    {
+      "id": 2,
+      "icon": "building",
+      "title": "Commercial Spaces",
+      "description": "Workplaces that inspire creativity and foster well-being through biophilic design.",
+      "details": "Modern offices, retail spaces, and commercial complexes designed for productivity and success."
+    },
+    {
+      "id": 3,
+      "icon": "government",
+      "title": "Public Infrastructure",
+      "description": "Community spaces that connect people with nature and promote sustainable urban living.",
+      "details": "Government buildings, civic centers, and public amenities that serve communities with pride."
+    }
+  ],
+  "whyChoose": [
+    {
+      "id": 1,
+      "title": "25+ Years",
+      "description": "Of Excellence in Construction"
+    },
+    {
+      "id": 2,
+      "title": "Quality",
+      "description": "World-class Infrastructure"
+    },
+    {
+      "id": 3,
+      "title": "Innovation",
+      "description": "Setting New Trends"
+    },
+    {
+      "id": 4,
+      "title": "Trust",
+      "description": "Reputed & Reliable"
+    }
+  ],
+  "about": {
+    "intro": "At Chamankar Group, we believe architecture should breathe. Our designs embrace natural forms and organic materials, creating spaces that feel alive and connected to their environment.",
+    "mission": "With over 25 years of experience, we've mastered the art of blending innovation with nature's timeless principles.",
+    "vision": {
+      "title": "Building Dreams That Flow With Life",
+      "paragraphs": [
+        "Aspiring for world class living standards and contemporary work places come within reach of all. We at CHAMANKAR GROUP expand horizons, link people and organizations, set up new trends, and continually enhance the values entrusted to our care.",
+        "Our aim is setting up of comfortable and luxurious dwelling spheres that impeccably match world class infrastructures. We aspire to create establishments that give our customers the joy of owning a paradise.",
+        "Our true satisfaction comes through a million smiles of our customers we have generated over the years. The benchmarks set by Chamankar Group in residential as well as commercial estate development have been extraordinary.",
+        "We create infrastructure which is a perfect blend of beauty and strength. At the core the idea still remains to provide a world class experience to our ever valued customers."
+      ]
+    },
+    "values": [
+      {
+        "id": 1,
+        "title": "Excellence",
+        "description": "Committed to delivering exceptional quality in every project we undertake."
+      },
+      {
+        "id": 2,
+        "title": "Innovation",
+        "description": "Pioneering new trends and expanding horizons in construction."
+      },
+      {
+        "id": 3,
+        "title": "Trust",
+        "description": "Building lasting relationships based on reliability and integrity."
+      },
+      {
+        "id": 4,
+        "title": "Sustainability",
+        "description": "Creating spaces that respect and harmonize with nature."
+      }
+    ]
+  },
+  "featuredProjects": [
+    {
+      "id": 1,
+      "name": "New Maharashtra Sadan",
+      "location": "New Delhi",
+      "category": "Government",
+      "description": "A prestigious government project showcasing architectural excellence.",
+      "featured": true
+    },
+    {
+      "id": 2,
+      "name": "Epitome at Pali Hill",
+      "location": "Bandra West, Mumbai",
+      "category": "Residential",
+      "description": "Luxurious residential tower in the heart of Bandra.",
+      "featured": true
+    },
+    {
+      "id": 3,
+      "name": "Andheri RTO",
+      "location": "Andheri, Mumbai",
+      "category": "Government",
+      "description": "Modern government building with state-of-the-art facilities.",
+      "featured": true
+    }
+  ],
+  "contact": {
+    "address": "Mumbai, Maharashtra, India",
+    "email": "info@chamankar.com",
+    "phone": "+91 22 1234 5678",
+    "hours": "Mon - Sat: 9:00 AM - 6:00 PM"
+  },
+  "social": {
+    "instagram": "#",
+    "linkedin": "#",
+    "twitter": "#"
+  },
+  "footer": {
+    "tagline": "Creating harmonious architecture that flows with life. Award-winning design studio based in Mumbai.",
+    "copyright": "2024 Chamankar Group"
+  }
+}

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamankar Group - Organic Flow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sand: #e8ddd4;
+            --sand-light: #f5f1ec;
+            --clay: #c4936a;
+            --clay-dark: #a67b52;
+            --sage: #a8b5a0;
+            --sage-dark: #8a9b80;
+            --earth: #5c524a;
+            --text-dark: #2e2a26;
+            --text-medium: #5a544e;
+            --text-light: #8a847e;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--sand-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s;
+        }
+
+        .nav.scrolled {
+            background: rgba(245, 241, 236, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 60px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--clay);
+        }
+
+        .nav-cta {
+            padding: 14px 36px;
+            background: var(--earth);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--clay);
+        }
+
+        /* Hero with Wave */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 140px 60px 200px;
+            background: linear-gradient(180deg, var(--sand-light) 0%, var(--sand) 100%);
+        }
+
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(196, 147, 106, 0.15);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--clay-dark);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 28px;
+        }
+
+        .hero-title span {
+            color: var(--clay);
+        }
+
+        .hero-description {
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--text-medium);
+            margin-bottom: 48px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding: 18px 44px;
+            background: var(--earth);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--clay);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            padding: 18px 44px;
+            background: transparent;
+            border: 2px solid var(--earth);
+            color: var(--earth);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--earth);
+            color: var(--white);
+        }
+
+        .hero-visual {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45%;
+            aspect-ratio: 4/5;
+            border-radius: 200px 200px 100px 100px;
+            background: linear-gradient(135deg, var(--clay), var(--clay-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+        }
+
+        .hero-wave svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Projects Section with Curved Cards */
+        .projects-section {
+            padding: 120px 60px;
+            background: var(--white);
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 80px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 17px;
+            color: var(--text-medium);
+            line-height: 1.8;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .project-card {
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--sand-light);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .project-image {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--sand), #d4c4b0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .image-placeholder {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .project-info {
+            padding: 28px;
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(196, 147, 106, 0.15);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--clay-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .project-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .project-location {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Curved About Section */
+        .about-section {
+            padding: 160px 60px;
+            background: var(--sage);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: var(--white);
+            border-radius: 0 0 50% 50%;
+        }
+
+        .about-section::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: var(--sand-light);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 28px;
+            line-height: 1.2;
+        }
+
+        .about-text p {
+            font-size: 17px;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 20px;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 28px;
+            border-radius: 20px;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .about-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .about-img {
+            aspect-ratio: 3/4;
+            background: rgba(255,255,255,0.2);
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-img:first-child {
+            margin-top: 60px;
+        }
+
+        /* Services with Organic Shapes */
+        .services-section {
+            padding: 140px 60px;
+            background: var(--sand-light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .service-card {
+            padding: 48px;
+            background: var(--white);
+            border-radius: 32px;
+            text-align: center;
+            transition: all 0.4s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--clay), var(--clay-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 28px;
+        }
+
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 140px 60px;
+            background: var(--earth);
+            color: var(--white);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-photo {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--sage), var(--sage-dark));
+            border-radius: 50%;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 14px;
+            color: var(--clay);
+        }
+
+        /* CTA with Wave */
+        .cta-section {
+            padding: 140px 60px;
+            background: linear-gradient(135deg, var(--clay), var(--clay-dark));
+            text-align: center;
+            color: var(--white);
+            position: relative;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            max-width: 500px;
+            margin: 0 auto 48px;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 56px;
+            background: var(--white);
+            color: var(--clay-dark);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 60px;
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 14px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-visual { display: none; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .about-content { grid-template-columns: 1fr; }
+            .about-visual { display: none; }
+            .services-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { padding: 120px 32px 160px; }
+            .hero-title { font-size: 42px; }
+            .section-title { font-size: 36px; }
+            .team-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="logo">Chamankar</a>
+        <ul class="nav-links">
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <a href="#" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Architecture & Design Studio</div>
+            <h1 class="hero-title">Where Nature Meets <span>Structure</span></h1>
+            <p class="hero-description">Creating harmonious spaces that flow with life. For 25 years, we've designed architecture that breathes with its environment.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">Explore Projects</a>
+                <a href="#" class="btn-outline">Our Philosophy</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <span class="image-placeholder" style="color: white;">Featured Project</span>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 150" fill="none" preserveAspectRatio="none">
+                <path d="M0 50C240 100 480 0 720 50C960 100 1200 0 1440 50V150H0V50Z" fill="#ffffff"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects-section">
+        <div class="section-header">
+            <div class="section-tag">Our Portfolio</div>
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-description">Discover our collection of thoughtfully designed spaces that harmonize with their surroundings.</p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Residential</span>
+                    <h3 class="project-name">The Horizon Residences</h3>
+                    <p class="project-location">Worli Sea Face, Mumbai</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Commercial</span>
+                    <h3 class="project-name">Vertex Business Park</h3>
+                    <p class="project-location">BKC, Mumbai</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Project Image</span>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Government</span>
+                    <h3 class="project-name">Civic Community Center</h3>
+                    <p class="project-location">Andheri, Mumbai</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Building Dreams That Flow With Life</h2>
+                <p>At Chamankar Group, we believe architecture should breathe. Our designs embrace natural forms and organic materials, creating spaces that feel alive and connected to their environment.</p>
+                <p>With over 25 years of experience, we've mastered the art of blending innovation with nature's timeless principles.</p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label">Years of Excellence</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label">Industry Awards</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual">
+                <div class="about-img">
+                    <span class="image-placeholder">Image</span>
+                </div>
+                <div class="about-img">
+                    <span class="image-placeholder">Image</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section">
+        <div class="section-header">
+            <div class="section-tag">What We Do</div>
+            <h2 class="section-title">Our Expertise</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    </svg>
+                </div>
+                <h3>Residential Design</h3>
+                <p>Homes that embrace natural light, organic forms, and sustainable living principles.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <rect x="4" y="2" width="16" height="20" rx="2"/>
+                        <path d="M9 22v-4h6v4"/>
+                    </svg>
+                </div>
+                <h3>Commercial Spaces</h3>
+                <p>Workplaces that inspire creativity and foster well-being through biophilic design.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M3 21h18M9 21V8l-6 4v9"/>
+                    </svg>
+                </div>
+                <h3>Public Infrastructure</h3>
+                <p>Community spaces that connect people with nature and promote sustainable urban living.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="team-section">
+        <div class="section-header" style="text-align: center;">
+            <div class="section-tag" style="color: var(--clay);">Our People</div>
+            <h2 class="section-title" style="color: white;">Leadership Team</h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Rajesh Chamankar</h4>
+                <p class="member-role">Founder & Chairman</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Priya Sharma</h4>
+                <p class="member-role">Chief Architect</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Amit Desai</h4>
+                <p class="member-role">Director, Projects</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Sneha Patel</h4>
+                <p class="member-role">Head of Design</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Create Something Beautiful?</h2>
+        <p>Let's discuss your vision and explore how organic design can transform your space.</p>
+        <a href="#" class="cta-btn">Start Your Journey</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Chamankar</div>
+                <p class="footer-tagline">Creating harmonious architecture that flows with life. Award-winning design studio based in Mumbai.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Navigate</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                    <li><a href="#">Mumbai, India</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Chamankar Group</span>
+            <span>Privacy | Terms</span>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

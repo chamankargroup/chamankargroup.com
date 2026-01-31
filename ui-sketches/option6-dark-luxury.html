@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamankar Group - Dark Luxury</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0f0f0f;
+            --bg-darker: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --gold: #c9a962;
+            --gold-light: #dfc991;
+            --gold-dark: #a68b4b;
+            --amber: #d4a574;
+            --white: #ffffff;
+            --text-light: #e5e5e5;
+            --text-muted: #888888;
+            --text-dim: #555555;
+            --border: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-dark);
+            color: var(--white);
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 28px 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: all 0.4s;
+        }
+
+        .nav.scrolled {
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            padding: 14px 36px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        /* Hero - Cinematic */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 64px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1512, #0f0f0f);
+            opacity: 0.9;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, var(--bg-dark), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 80px;
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+        }
+
+        .hero-title span {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.9;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .btn-gold {
+            padding: 18px 48px;
+            background: var(--gold);
+            color: var(--bg-dark);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+        }
+
+        .btn-outline {
+            padding: 18px 48px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scroll-text {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        /* Featured Projects - Dramatic */
+        .projects-section {
+            padding: 160px 64px;
+            background: var(--bg-darker);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 80px;
+        }
+
+        .section-tag {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .section-link {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .project-card {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .project-image {
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, #2a2520, #1a1512);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid var(--border);
+            transition: border-color 0.4s;
+        }
+
+        .project-card:hover .project-image::after {
+            border-color: var(--gold);
+        }
+
+        .image-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 32px;
+        }
+
+        .project-category {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .project-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .project-location {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 200px 64px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: center;
+            background: var(--bg-dark);
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .about-image {
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--gold-dark), #2a2520);
+            border: 1px solid var(--border);
+        }
+
+        .about-accent {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 50%;
+            aspect-ratio: 1;
+            border: 1px solid var(--gold);
+        }
+
+        .about-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+        }
+
+        .about-content p {
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 2;
+            margin-bottom: 24px;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+            padding-top: 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 400;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* Services - Luxury Grid */
+        .services-section {
+            padding: 160px 64px;
+            background: var(--bg-darker);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            margin-top: 80px;
+            background: var(--border);
+        }
+
+        .service-card {
+            background: var(--bg-dark);
+            padding: 56px;
+            transition: all 0.4s;
+        }
+
+        .service-card:hover {
+            background: var(--bg-card);
+        }
+
+        .service-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        .service-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Team */
+        .team-section {
+            padding: 160px 64px;
+            background: var(--bg-dark);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-photo {
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, #2a2520, #1a1512);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s;
+        }
+
+        .team-member:hover .member-photo {
+            border-color: var(--gold);
+        }
+
+        .member-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            font-size: 12px;
+            color: var(--gold);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Awards */
+        .awards-section {
+            padding: 160px 64px;
+            background: var(--bg-darker);
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .award-card {
+            padding: 40px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .award-card:hover {
+            border-color: var(--gold);
+        }
+
+        .award-year {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .award-name {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .award-org {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 200px 64px;
+            background: linear-gradient(135deg, #1a1512, var(--bg-dark));
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--gold));
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 100px 64px 60px;
+            background: var(--bg-darker);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .footer-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 14px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 56px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .about-section { grid-template-columns: 1fr; gap: 60px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .awards-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav { padding: 24px 32px; }
+            .nav-links { display: none; }
+            .hero { padding: 120px 32px; }
+            .hero-title { font-size: 42px; }
+            .section-title { font-size: 36px; }
+            .team-grid { grid-template-columns: 1fr; }
+            .awards-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="logo">Chamankar</a>
+        <ul class="nav-links">
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Awards</a></li>
+        </ul>
+        <a href="#" class="nav-cta">Contact</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">Architecture & Design Studio</p>
+            <h1 class="hero-title">Crafting <span>Timeless</span> Elegance</h1>
+            <p class="hero-description">For over 25 years, we've been creating architectural masterpieces that define luxury living in Mumbai.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-gold">Explore Projects</a>
+                <a href="#" class="btn-outline">Our Story</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span class="scroll-text">Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects-section">
+        <div class="section-header">
+            <div>
+                <p class="section-tag">Portfolio</p>
+                <h2 class="section-title">Featured Projects</h2>
+            </div>
+            <a href="#" class="section-link">
+                View All
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Image</span>
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Residential</p>
+                    <h3 class="project-name">The Horizon Residences</h3>
+                    <p class="project-location">Worli Sea Face, Mumbai</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Image</span>
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Commercial</p>
+                    <h3 class="project-name">Vertex Business Park</h3>
+                    <p class="project-location">BKC, Mumbai</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <span class="image-placeholder">Image</span>
+                </div>
+                <div class="project-info">
+                    <p class="project-category">Government</p>
+                    <h3 class="project-name">Civic Community Center</h3>
+                    <p class="project-location">Andheri, Mumbai</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section">
+        <div class="about-visual">
+            <div class="about-image">
+                <span class="image-placeholder" style="color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Studio Image</span>
+            </div>
+            <div class="about-accent"></div>
+        </div>
+        <div class="about-content">
+            <h2>Building Dreams, Creating Landmarks</h2>
+            <p>At Chamankar Group, we believe luxury is in the details. Our architecture celebrates craftsmanship, quality materials, and timeless design that transcends trends.</p>
+            <p>With over two decades of experience, we've become synonymous with prestige development in Mumbai's most coveted locations.</p>
+            <div class="about-stats">
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Years Excellence</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Projects Delivered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2M+</div>
+                    <div class="stat-label">Sq. Ft. Developed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">Industry Awards</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section">
+        <div class="section-tag">Expertise</div>
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-number">I</div>
+                <h3>Residential Design</h3>
+                <p>Luxury residences crafted for discerning clients who appreciate the finest in architectural excellence.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">II</div>
+                <h3>Commercial Architecture</h3>
+                <p>Prestigious office and retail spaces that elevate brands and inspire excellence.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">III</div>
+                <h3>Government Projects</h3>
+                <p>Public infrastructure that combines civic responsibility with architectural distinction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="team-section">
+        <div class="section-tag">Leadership</div>
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Rajesh Chamankar</h4>
+                <p class="member-role">Founder & Chairman</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Priya Sharma</h4>
+                <p class="member-role">Chief Architect</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Amit Desai</h4>
+                <p class="member-role">Director, Projects</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Sneha Patel</h4>
+                <p class="member-role">Head of Design</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards -->
+    <section class="awards-section">
+        <div class="section-tag">Recognition</div>
+        <h2 class="section-title">Awards & Accolades</h2>
+        <div class="awards-grid">
+            <div class="award-card">
+                <div class="award-year">2024</div>
+                <div class="award-name">Best Residential Project</div>
+                <div class="award-org">Architecture India</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2023</div>
+                <div class="award-name">Sustainable Design Award</div>
+                <div class="award-org">Green Building Council</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2022</div>
+                <div class="award-name">Excellence Award</div>
+                <div class="award-org">CREDAI Mumbai</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2021</div>
+                <div class="award-name">Innovation Award</div>
+                <div class="award-org">Design Week</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Let's Create Together</h2>
+        <p>Your vision deserves architecture that matches its ambition.</p>
+        <a href="#" class="btn-gold">Begin Your Project</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">CHAMANKAR</div>
+                <p class="footer-tagline">Crafting timeless elegance in architecture. Mumbai's premier luxury design studio since 1999.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                    <li><a href="#">Mumbai, India</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Chamankar Group. All Rights Reserved.</span>
+            <span>Privacy | Terms | Sitemap</span>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

@@ -1,90 +1,93 @@
 <template>
   <div class="contact">
     <!-- Page Header -->
-    <section class="bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">Contact Us</h1>
-        <p class="text-xl text-center text-gray-100">Let's discuss your next project</p>
+    <section class="relative pt-32 pb-20 px-6 lg:px-8 bg-gradient-to-b from-sand-light to-sand">
+      <div class="max-w-7xl mx-auto text-center">
+        <span class="section-tag">Get in Touch</span>
+        <h1 class="font-display text-5xl md:text-6xl font-normal mb-6">Contact Us</h1>
+        <p class="text-text-medium text-lg max-w-2xl mx-auto">
+          Let's discuss your vision and explore how we can bring your architectural dreams to life.
+        </p>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="py-16 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <section class="py-16 lg:py-24 bg-white px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <!-- Contact Form -->
-          <div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-            <p class="text-gray-600 mb-8">Fill out the form below and we'll get back to you as soon as possible.</p>
+          <div class="bg-sand-light rounded-3xl p-8 lg:p-12">
+            <h2 class="font-display text-3xl mb-3">Send a Message</h2>
+            <p class="text-text-medium mb-8">Fill out the form below and we'll get back to you as soon as possible.</p>
 
             <form @submit.prevent="submitForm" class="space-y-6">
               <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                <label for="name" class="block text-sm font-medium text-text-dark mb-2">Full Name *</label>
                 <input
                   type="text"
                   id="name"
                   v-model="formData.name"
                   required
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  class="w-full px-5 py-3.5 bg-white border-0 rounded-xl text-text-dark placeholder-text-light focus:ring-2 focus:ring-clay transition-all"
                   placeholder="Your name"
                 >
               </div>
 
               <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                <label for="email" class="block text-sm font-medium text-text-dark mb-2">Email Address *</label>
                 <input
                   type="email"
                   id="email"
                   v-model="formData.email"
                   required
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  class="w-full px-5 py-3.5 bg-white border-0 rounded-xl text-text-dark placeholder-text-light focus:ring-2 focus:ring-clay transition-all"
                   placeholder="your.email@example.com"
                 >
               </div>
 
               <div>
-                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label for="phone" class="block text-sm font-medium text-text-dark mb-2">Phone Number</label>
                 <input
                   type="tel"
                   id="phone"
                   v-model="formData.phone"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  class="w-full px-5 py-3.5 bg-white border-0 rounded-xl text-text-dark placeholder-text-light focus:ring-2 focus:ring-clay transition-all"
                   placeholder="+91 XXXXX XXXXX"
                 >
               </div>
 
               <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+                <label for="subject" class="block text-sm font-medium text-text-dark mb-2">Subject *</label>
                 <input
                   type="text"
                   id="subject"
                   v-model="formData.subject"
                   required
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  class="w-full px-5 py-3.5 bg-white border-0 rounded-xl text-text-dark placeholder-text-light focus:ring-2 focus:ring-clay transition-all"
                   placeholder="How can we help you?"
                 >
               </div>
 
               <div>
-                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                <label for="message" class="block text-sm font-medium text-text-dark mb-2">Message *</label>
                 <textarea
                   id="message"
                   v-model="formData.message"
                   required
                   rows="5"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  class="w-full px-5 py-3.5 bg-white border-0 rounded-xl text-text-dark placeholder-text-light focus:ring-2 focus:ring-clay transition-all resize-none"
                   placeholder="Tell us more about your project..."
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                class="w-full bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+                class="w-full py-4 bg-earth text-white font-medium rounded-full hover:bg-clay transition-all"
               >
                 Send Message
               </button>
 
-              <div v-if="submitMessage" :class="submitSuccess ? 'text-green-600' : 'text-red-600'" class="text-center font-medium">
+              <div v-if="submitMessage" :class="submitSuccess ? 'text-sage-dark' : 'text-clay-dark'" class="text-center font-medium bg-white rounded-xl p-4">
                 {{ submitMessage }}
               </div>
             </form>
@@ -92,92 +95,138 @@
 
           <!-- Contact Information -->
           <div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">Contact Information</h2>
+            <h2 class="font-display text-3xl mb-8">Contact Information</h2>
 
-            <div class="space-y-6 mb-8">
-              <div class="flex items-start">
-                <div class="flex-shrink-0">
-                  <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary-100 text-primary-600">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                  </div>
+            <div class="space-y-6 mb-10">
+              <!-- Address -->
+              <div class="flex items-start gap-5">
+                <div class="w-14 h-14 bg-gradient-to-br from-clay to-clay-dark rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
                 </div>
-                <div class="ml-4">
-                  <h3 class="text-lg font-semibold text-gray-900">Address</h3>
-                  <p class="mt-1 text-gray-600">Mumbai, Maharashtra, India</p>
+                <div>
+                  <h3 class="font-medium text-text-dark text-lg mb-1">Address</h3>
+                  <p class="text-text-medium">Mumbai, Maharashtra, India</p>
                 </div>
               </div>
 
-              <div class="flex items-start">
-                <div class="flex-shrink-0">
-                  <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary-100 text-primary-600">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                  </div>
+              <!-- Email -->
+              <div class="flex items-start gap-5">
+                <div class="w-14 h-14 bg-gradient-to-br from-clay to-clay-dark rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
                 </div>
-                <div class="ml-4">
-                  <h3 class="text-lg font-semibold text-gray-900">Email</h3>
-                  <p class="mt-1 text-gray-600">info@chamankargroup.com</p>
-                </div>
-              </div>
-
-              <div class="flex items-start">
-                <div class="flex-shrink-0">
-                  <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary-100 text-primary-600">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="ml-4">
-                  <h3 class="text-lg font-semibold text-gray-900">Phone</h3>
-                  <p class="mt-1 text-gray-600">+91 22 XXXX XXXX</p>
+                <div>
+                  <h3 class="font-medium text-text-dark text-lg mb-1">Email</h3>
+                  <a href="mailto:info@chamankar.com" class="text-text-medium hover:text-clay transition-colors">info@chamankar.com</a>
                 </div>
               </div>
 
-              <div class="flex items-start">
-                <div class="flex-shrink-0">
-                  <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary-100 text-primary-600">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                  </div>
+              <!-- Phone -->
+              <div class="flex items-start gap-5">
+                <div class="w-14 h-14 bg-gradient-to-br from-clay to-clay-dark rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                  </svg>
                 </div>
-                <div class="ml-4">
-                  <h3 class="text-lg font-semibold text-gray-900">Business Hours</h3>
-                  <p class="mt-1 text-gray-600">Monday - Saturday: 9:00 AM - 6:00 PM</p>
-                  <p class="text-gray-600">Sunday: Closed</p>
+                <div>
+                  <h3 class="font-medium text-text-dark text-lg mb-1">Phone</h3>
+                  <a href="tel:+912212345678" class="text-text-medium hover:text-clay transition-colors">+91 22 1234 5678</a>
+                </div>
+              </div>
+
+              <!-- Hours -->
+              <div class="flex items-start gap-5">
+                <div class="w-14 h-14 bg-gradient-to-br from-clay to-clay-dark rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-medium text-text-dark text-lg mb-1">Business Hours</h3>
+                  <p class="text-text-medium">Monday - Saturday: 9:00 AM - 6:00 PM</p>
+                  <p class="text-text-light">Sunday: Closed</p>
                 </div>
               </div>
             </div>
 
-            <div class="bg-gray-50 p-6 rounded-lg">
-              <h3 class="text-lg font-semibold text-gray-900 mb-3">Why Choose Us?</h3>
-              <ul class="space-y-2 text-gray-600">
-                <li class="flex items-center">
-                  <svg class="h-5 w-5 text-primary-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
+            <!-- Why Choose Us Box -->
+            <div class="bg-sage rounded-3xl p-8">
+              <h3 class="font-display text-xl text-white mb-5">Why Choose Us?</h3>
+              <ul class="space-y-4">
+                <li class="flex items-center gap-3 text-white/90">
+                  <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </div>
                   25+ Years of Experience
                 </li>
-                <li class="flex items-center">
-                  <svg class="h-5 w-5 text-primary-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
+                <li class="flex items-center gap-3 text-white/90">
+                  <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </div>
                   Trusted by Government & Private Clients
                 </li>
-                <li class="flex items-center">
-                  <svg class="h-5 w-5 text-primary-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
+                <li class="flex items-center gap-3 text-white/90">
+                  <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </div>
                   World-Class Quality Standards
                 </li>
               </ul>
             </div>
+
+            <!-- Social Links -->
+            <div class="mt-10">
+              <p class="text-sm text-text-light mb-4">Follow us</p>
+              <div class="flex gap-4">
+                <a href="#" class="w-12 h-12 bg-sand rounded-full flex items-center justify-center text-text-medium hover:bg-clay hover:text-white transition-all">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="18" cy="6" r="1.5" fill="currentColor"/>
+                  </svg>
+                </a>
+                <a href="#" class="w-12 h-12 bg-sand rounded-full flex items-center justify-center text-text-medium hover:bg-clay hover:text-white transition-all">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect x="2" y="9" width="4" height="12"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </a>
+                <a href="#" class="w-12 h-12 bg-sand rounded-full flex items-center justify-center text-text-medium hover:bg-clay hover:text-white transition-all">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Placeholder -->
+    <section class="h-96 bg-sand relative">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-center">
+          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c4936a" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <p class="text-text-medium">Map Integration Coming Soon</p>
         </div>
       </div>
     </section>

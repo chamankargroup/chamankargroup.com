@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awards - Chamankar Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --sand: #e8ddd4;
+            --sand-light: #f5f1ec;
+            --clay: #c4936a;
+            --clay-dark: #a67b52;
+            --sage: #a8b5a0;
+            --sage-dark: #8a9b80;
+            --earth: #5c524a;
+            --text-dark: #2e2a26;
+            --text-medium: #5a544e;
+            --text-light: #8a847e;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--sand-light);
+            color: var(--text-dark);
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 241, 236, 0.95);
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--clay); }
+
+        .nav-cta {
+            padding: 14px 36px;
+            background: var(--earth);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover { background: var(--clay); }
+
+        /* Page Header */
+        .page-header {
+            padding: 180px 60px 100px;
+            text-align: center;
+        }
+
+        .page-badge {
+            display: inline-flex;
+            padding: 10px 24px;
+            background: rgba(196, 147, 106, 0.15);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--clay-dark);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .page-description {
+            font-size: 18px;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            padding: 60px;
+            background: var(--clay);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Awards Grid */
+        .awards-section {
+            padding: 100px 60px;
+            background: var(--white);
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .award-card {
+            background: var(--sand-light);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            transition: all 0.4s;
+        }
+
+        .award-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        }
+
+        .award-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            color: var(--clay);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .award-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--clay);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .award-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .award-org {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .award-project {
+            font-size: 14px;
+            color: var(--text-medium);
+            padding-top: 16px;
+            border-top: 1px solid var(--sand);
+        }
+
+        /* Featured Awards */
+        .featured-section {
+            padding: 140px 60px;
+            background: var(--sage);
+            position: relative;
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 0;
+            right: 0;
+            height: 160px;
+            background: var(--white);
+            border-radius: 0 0 50% 50%;
+        }
+
+        .featured-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 400;
+            color: var(--white);
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .featured-card:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-8px);
+        }
+
+        .featured-image {
+            aspect-ratio: 16/10;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-placeholder {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .featured-info {
+            padding: 28px;
+            color: var(--white);
+        }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .featured-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .featured-details {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Press Section */
+        .press-section {
+            padding: 140px 60px;
+            background: var(--sand-light);
+        }
+
+        .press-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .press-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            font-weight: 400;
+        }
+
+        .press-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .press-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .press-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .press-logo {
+            height: 40px;
+            background: var(--sand);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .press-quote {
+            font-size: 16px;
+            font-style: italic;
+            color: var(--text-medium);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .press-date {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 140px 60px;
+            background: linear-gradient(135deg, var(--clay), var(--clay-dark));
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 56px;
+            background: var(--white);
+            color: var(--clay-dark);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 60px;
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 24px;
+        }
+
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--white); }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .stats-bar { flex-wrap: wrap; gap: 40px; }
+            .awards-grid { grid-template-columns: repeat(2, 1fr); }
+            .featured-grid { grid-template-columns: 1fr; }
+            .press-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-title { font-size: 42px; }
+            .stats-bar { flex-direction: column; gap: 32px; }
+            .awards-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="logo">Chamankar</a>
+        <ul class="nav-links">
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="awards.html" class="active">Awards</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="nav-cta">Get in Touch</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-header">
+        <div class="page-badge">Recognition</div>
+        <h1 class="page-title">Awards & Press</h1>
+        <p class="page-description">Celebrating 25 years of architectural excellence recognized by industry leaders and media worldwide.</p>
+    </header>
+
+    <!-- Stats -->
+    <section class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">40+</div>
+            <div class="stat-label">Awards Won</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">15</div>
+            <div class="stat-label">Industry Firsts</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">100+</div>
+            <div class="stat-label">Media Features</div>
+        </div>
+    </section>
+
+    <!-- Awards Grid -->
+    <section class="awards-section">
+        <div class="awards-grid">
+            <div class="award-card">
+                <div class="award-year">2024</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <circle cx="12" cy="8" r="6"/>
+                        <path d="M12 14l-3 8 3-2 3 2-3-8"/>
+                    </svg>
+                </div>
+                <div class="award-name">Best Residential Project</div>
+                <div class="award-org">Architecture India Awards</div>
+                <div class="award-project">The Horizon Residences</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2024</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    </svg>
+                </div>
+                <div class="award-name">Green Building Award</div>
+                <div class="award-org">IGBC India</div>
+                <div class="award-project">Eco Tower Complex</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2023</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <div class="award-name">Design Excellence</div>
+                <div class="award-org">IIID Awards</div>
+                <div class="award-project">Vertex Business Park</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2023</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <circle cx="12" cy="8" r="6"/>
+                        <path d="M12 14l-3 8 3-2 3 2-3-8"/>
+                    </svg>
+                </div>
+                <div class="award-name">Sustainable Design</div>
+                <div class="award-org">Green Building Council</div>
+                <div class="award-project">Palm Grove Estate</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2022</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <div class="award-name">Excellence Award</div>
+                <div class="award-org">CREDAI Mumbai</div>
+                <div class="award-project">Marina Heights</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2022</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    </svg>
+                </div>
+                <div class="award-name">Innovation Award</div>
+                <div class="award-org">Design Week Mumbai</div>
+                <div class="award-project">Civic Center</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2021</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <circle cx="12" cy="8" r="6"/>
+                        <path d="M12 14l-3 8 3-2 3 2-3-8"/>
+                    </svg>
+                </div>
+                <div class="award-name">Best Commercial</div>
+                <div class="award-org">Real Estate Awards</div>
+                <div class="award-project">Trade Tower</div>
+            </div>
+            <div class="award-card">
+                <div class="award-year">2020</div>
+                <div class="award-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <div class="award-name">Lifetime Achievement</div>
+                <div class="award-org">IIA Mumbai</div>
+                <div class="award-project">Rajesh Chamankar</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured -->
+    <section class="featured-section">
+        <div class="featured-header">
+            <h2>Award-Winning Projects</h2>
+        </div>
+        <div class="featured-grid">
+            <div class="featured-card">
+                <div class="featured-image">
+                    <span class="image-placeholder">Project Image</span>
+                </div>
+                <div class="featured-info">
+                    <span class="featured-badge">Best Residential 2024</span>
+                    <h3 class="featured-name">The Horizon Residences</h3>
+                    <p class="featured-details">45-floor luxury residential tower with panoramic sea views</p>
+                </div>
+            </div>
+            <div class="featured-card">
+                <div class="featured-image">
+                    <span class="image-placeholder">Project Image</span>
+                </div>
+                <div class="featured-info">
+                    <span class="featured-badge">Design Excellence 2023</span>
+                    <h3 class="featured-name">Vertex Business Park</h3>
+                    <p class="featured-details">LEED Platinum certified commercial complex in BKC</p>
+                </div>
+            </div>
+            <div class="featured-card">
+                <div class="featured-image">
+                    <span class="image-placeholder">Project Image</span>
+                </div>
+                <div class="featured-info">
+                    <span class="featured-badge">Innovation Award 2022</span>
+                    <h3 class="featured-name">Civic Community Center</h3>
+                    <p class="featured-details">Public space designed for community gatherings</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Press -->
+    <section class="press-section">
+        <div class="press-header">
+            <h2>In the Press</h2>
+        </div>
+        <div class="press-grid">
+            <div class="press-card">
+                <div class="press-logo">Architectural Digest</div>
+                <p class="press-quote">"Chamankar Group is redefining luxury living in Mumbai with their organic approach to design."</p>
+                <p class="press-date">January 2024</p>
+            </div>
+            <div class="press-card">
+                <div class="press-logo">Economic Times</div>
+                <p class="press-quote">"A pioneer in sustainable architecture, setting new standards for the industry."</p>
+                <p class="press-date">November 2023</p>
+            </div>
+            <div class="press-card">
+                <div class="press-logo">Design Today</div>
+                <p class="press-quote">"Their harmonious blend of nature and structure creates spaces that truly breathe."</p>
+                <p class="press-date">August 2023</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Create Something Award-Worthy?</h2>
+        <p>Let's discuss your vision and bring it to life.</p>
+        <a href="contact.html" class="cta-btn">Start Your Project</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Chamankar</div>
+                <p class="footer-tagline">Creating harmonious architecture that flows with life. Award-winning design studio based in Mumbai.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Navigate</h4>
+                <ul class="footer-links">
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                    <li><a href="#">Mumbai, India</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Chamankar Group</span>
+            <span>Privacy | Terms</span>
+        </div>
+    </footer>
+</body>
+</html>

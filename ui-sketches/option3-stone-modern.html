@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamankar Group - Stone Modern</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --stone: #e8e4df;
+            --concrete: #c9c4bc;
+            --charcoal: #2d2d2d;
+            --wood: #b08968;
+            --wood-dark: #8b6b4a;
+            --warm-white: #faf9f7;
+            --text-dark: #1a1a1a;
+            --text-medium: #4a4a4a;
+            --text-light: #7a7a7a;
+        }
+
+        body {
+            font-family: 'Archivo', sans-serif;
+            background: var(--warm-white);
+            color: var(--text-dark);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 24px 56px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .nav.scrolled {
+            background: rgba(250, 249, 247, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--wood);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--wood);
+        }
+
+        .nav-cta {
+            padding: 14px 32px;
+            background: var(--charcoal);
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--wood);
+        }
+
+        /* Hero - Split Screen */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+        }
+
+        .hero-content {
+            padding: 180px 80px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--warm-white);
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--wood);
+            margin-bottom: 32px;
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 40px;
+            height: 3px;
+            background: var(--wood);
+        }
+
+        .hero-title {
+            font-size: 68px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 32px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-medium);
+            max-width: 480px;
+            margin-bottom: 48px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding: 18px 40px;
+            background: var(--charcoal);
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--wood);
+        }
+
+        .btn-secondary {
+            padding: 18px 40px;
+            background: transparent;
+            border: 2px solid var(--charcoal);
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .hero-image {
+            background: linear-gradient(135deg, var(--stone), var(--concrete));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            right: 60px;
+            bottom: 60px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .image-placeholder {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        /* Featured Work */
+        .featured {
+            padding: 140px 56px;
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 80px;
+        }
+
+        .section-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--wood);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 52px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .section-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--wood);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .projects-showcase {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+        }
+
+        .project-main {
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, #5a5a5a, #3a3a3a);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .project-main::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            z-index: 1;
+        }
+
+        .project-category {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--wood);
+            margin-bottom: 12px;
+        }
+
+        .project-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .project-location {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .projects-side {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .project-small {
+            flex: 1;
+            background: linear-gradient(135deg, #5a5a5a, #3a3a3a);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .project-small::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+        }
+
+        .project-small .project-info {
+            bottom: 24px;
+            left: 24px;
+        }
+
+        .project-small .project-name {
+            font-size: 22px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: var(--wood);
+            color: white;
+        }
+
+        .stat-item {
+            padding: 60px 40px;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-size: 64px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 140px 56px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            background: var(--warm-white);
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .about-img-main {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--concrete), var(--stone));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-img-accent {
+            position: absolute;
+            bottom: -40px;
+            right: -40px;
+            width: 200px;
+            height: 200px;
+            background: var(--wood);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-content h2 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 32px;
+            line-height: 1.1;
+        }
+
+        .about-content p {
+            font-size: 16px;
+            line-height: 1.9;
+            color: var(--text-medium);
+            margin-bottom: 24px;
+        }
+
+        .about-list {
+            margin-top: 40px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .about-list-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .about-list-item::before {
+            content: '';
+            width: 24px;
+            height: 3px;
+            background: var(--wood);
+        }
+
+        /* Services Grid */
+        .services-section {
+            padding: 140px 56px;
+            background: var(--stone);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            margin-top: 60px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .service-item {
+            background: var(--warm-white);
+            padding: 56px;
+            transition: all 0.4s;
+        }
+
+        .service-item:hover {
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .service-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--concrete);
+            margin-bottom: 24px;
+            transition: color 0.4s;
+        }
+
+        .service-item:hover .service-number {
+            color: var(--wood);
+        }
+
+        .service-item h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .service-item p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-medium);
+            transition: color 0.4s;
+        }
+
+        .service-item:hover p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Awards */
+        .awards-section {
+            padding: 100px 56px;
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .awards-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .award-year {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--wood);
+        }
+
+        .award-name {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .award-org {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* CTA */
+        .cta-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 500px;
+        }
+
+        .cta-content {
+            padding: 100px 80px;
+            background: var(--wood);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cta-content h2 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+        }
+
+        .cta-content p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 48px;
+            background: white;
+            color: var(--wood);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+
+        .cta-btn:hover {
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .cta-image {
+            background: linear-gradient(135deg, var(--stone), var(--concrete));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 56px;
+            background: var(--text-dark);
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand span {
+            color: var(--wood);
+        }
+
+        .footer-tagline {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--wood);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-content { padding: 140px 40px 80px; }
+            .hero-image { min-height: 400px; }
+            .projects-showcase { grid-template-columns: 1fr; }
+            .stats-section { grid-template-columns: repeat(2, 1fr); }
+            .about-section { grid-template-columns: 1fr; gap: 60px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .cta-section { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 42px; }
+            .section-title { font-size: 36px; }
+            .stats-section { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="logo">CHAMANKAR<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Awards</a></li>
+        </ul>
+        <a href="#" class="nav-cta">Contact</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-tag">Architecture Studio</div>
+            <h1 class="hero-title">Designing Tomorrow's Landmarks</h1>
+            <p class="hero-description">We craft architectural experiences that blend innovation with timeless design, shaping Mumbai's skyline for over 25 years.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">View Projects</a>
+                <a href="#" class="btn-secondary">Our Story</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <span class="image-placeholder">Hero Image</span>
+        </div>
+    </section>
+
+    <!-- Featured Work -->
+    <section class="featured">
+        <div class="section-header">
+            <div>
+                <div class="section-tag">Featured Work</div>
+                <h2 class="section-title">Selected Projects</h2>
+            </div>
+            <a href="#" class="section-link">
+                View All
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        <div class="projects-showcase">
+            <div class="project-main">
+                <span class="image-placeholder">Project Image</span>
+                <div class="project-info">
+                    <div class="project-category">Residential</div>
+                    <h3 class="project-name">The Horizon Residences</h3>
+                    <p class="project-location">Worli Sea Face, Mumbai</p>
+                </div>
+            </div>
+            <div class="projects-side">
+                <div class="project-small">
+                    <span class="image-placeholder">Project</span>
+                    <div class="project-info">
+                        <div class="project-category">Commercial</div>
+                        <h3 class="project-name">Vertex Tower</h3>
+                        <p class="project-location">BKC, Mumbai</p>
+                    </div>
+                </div>
+                <div class="project-small">
+                    <span class="image-placeholder">Project</span>
+                    <div class="project-info">
+                        <div class="project-category">Government</div>
+                        <h3 class="project-name">Civic Center</h3>
+                        <p class="project-location">Andheri, Mumbai</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stat-item">
+            <div class="stat-number">25+</div>
+            <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">150+</div>
+            <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">2M+</div>
+            <div class="stat-label">Sq. Ft. Built</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">40+</div>
+            <div class="stat-label">Awards Won</div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section">
+        <div class="about-visual">
+            <div class="about-img-main">
+                <span class="image-placeholder">Studio Image</span>
+            </div>
+            <div class="about-img-accent">
+                <span class="image-placeholder" style="color: white;">Detail</span>
+            </div>
+        </div>
+        <div class="about-content">
+            <h2>Building Dreams,<br>Creating Landmarks</h2>
+            <p>At Chamankar Group, we believe architecture is more than just buildings. It's about creating spaces that inspire, environments that enhance lives, and landmarks that define cities.</p>
+            <p>With over two decades of experience, our multidisciplinary team brings together innovation, sustainability, and timeless design principles.</p>
+            <div class="about-list">
+                <div class="about-list-item">ISO 9001 Certified Quality</div>
+                <div class="about-list-item">Green Building Specialists</div>
+                <div class="about-list-item">Award-Winning Designs</div>
+                <div class="about-list-item">On-Time Delivery Guaranteed</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section">
+        <div class="section-tag">What We Do</div>
+        <h2 class="section-title">Our Expertise</h2>
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-number">01</div>
+                <h3>Residential Design</h3>
+                <p>From luxury apartments to independent villas, we create living spaces that reflect your lifestyle and aspirations.</p>
+            </div>
+            <div class="service-item">
+                <div class="service-number">02</div>
+                <h3>Commercial Spaces</h3>
+                <p>Modern office complexes and retail environments designed to boost productivity and enhance experiences.</p>
+            </div>
+            <div class="service-item">
+                <div class="service-number">03</div>
+                <h3>Government Projects</h3>
+                <p>Public infrastructure that serves communities with functionality, accessibility, and civic pride.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards -->
+    <section class="awards-section">
+        <div class="section-tag">Recognition</div>
+        <h2 class="section-title" style="margin-bottom: 40px;">Awards & Accolades</h2>
+        <div class="awards-row">
+            <div class="award-year">2024</div>
+            <div>
+                <div class="award-name">Best Residential Project</div>
+                <div class="award-org">Architecture India Awards</div>
+            </div>
+        </div>
+        <div class="awards-row">
+            <div class="award-year">2023</div>
+            <div>
+                <div class="award-name">Sustainable Design Excellence</div>
+                <div class="award-org">Green Building Council</div>
+            </div>
+        </div>
+        <div class="awards-row">
+            <div class="award-year">2022</div>
+            <div>
+                <div class="award-name">Construction Excellence Award</div>
+                <div class="award-org">CREDAI Mumbai</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Start Your Project?</h2>
+            <p>Let's discuss your vision and explore how we can bring it to life.</p>
+            <a href="#" class="cta-btn">Get in Touch</a>
+        </div>
+        <div class="cta-image">
+            <span class="image-placeholder">Contact Image</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">CHAMANKAR<span>.</span></div>
+                <p class="footer-tagline">Building dreams and creating landmarks across Mumbai for over 25 years. Award-winning architecture that defines skylines.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                    <li><a href="#">Mumbai, India</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Chamankar Group</span>
+            <span>Privacy | Terms</span>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

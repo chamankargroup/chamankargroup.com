@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamankar Group - Minimal Prestige</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #ffffff;
+            --off-white: #fafaf9;
+            --cream: #f7f5f3;
+            --terracotta: #c17f59;
+            --terracotta-dark: #a66a48;
+            --text: #1c1c1c;
+            --text-light: #6b6b6b;
+            --text-muted: #999999;
+            --border: #e5e5e5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Navigation - Ultra Minimal */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 32px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: all 0.4s;
+        }
+
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 24px 80px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 24px;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 56px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            font-size: 14px;
+            color: var(--text);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-cta::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--text);
+        }
+
+        /* Hero - Maximum Whitespace */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 160px 80px 120px;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 72px;
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 40px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.9;
+            max-width: 420px;
+            margin-bottom: 48px;
+        }
+
+        .hero-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text);
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+
+        .hero-link:hover {
+            gap: 24px;
+        }
+
+        .hero-link span {
+            width: 48px;
+            height: 1px;
+            background: var(--text);
+        }
+
+        .hero-image {
+            aspect-ratio: 4/5;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-placeholder {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Minimal Project Grid */
+        .projects-section {
+            padding: 160px 80px;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 48px;
+            font-weight: 400;
+        }
+
+        .section-link {
+            font-size: 14px;
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: color 0.3s;
+        }
+
+        .section-link:hover {
+            color: var(--text);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        .project-item {
+            cursor: pointer;
+        }
+
+        .project-image {
+            aspect-ratio: 3/4;
+            background: var(--cream);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-item:hover .project-image {
+            background: var(--terracotta);
+        }
+
+        .project-item:hover .project-image .image-placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .project-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .project-meta {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* About - Centered Minimal */
+        .about-section {
+            padding: 200px 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-eyebrow {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            margin-bottom: 32px;
+        }
+
+        .about-headline {
+            font-family: 'Instrument Serif', serif;
+            font-size: 44px;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 48px;
+        }
+
+        .about-text {
+            font-size: 17px;
+            color: var(--text-light);
+            line-height: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Stats - Minimal Line */
+        .stats-section {
+            padding: 100px 80px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Instrument Serif', serif;
+            font-size: 64px;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Services - Simple List */
+        .services-section {
+            padding: 160px 80px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 80px;
+        }
+
+        .service-item {
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .service-number {
+            font-size: 13px;
+            color: var(--terracotta);
+            margin-bottom: 24px;
+        }
+
+        .service-item h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .service-item p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Team - Portrait Style */
+        .team-section {
+            padding: 160px 80px;
+            background: var(--off-white);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+            margin-top: 80px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-photo {
+            aspect-ratio: 3/4;
+            background: var(--cream);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .member-role {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Awards - Minimal List */
+        .awards-section {
+            padding: 160px 80px;
+            border-top: 1px solid var(--border);
+        }
+
+        .awards-list {
+            margin-top: 80px;
+        }
+
+        .award-item {
+            display: grid;
+            grid-template-columns: 150px 1fr 200px;
+            align-items: center;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .award-year {
+            font-family: 'Instrument Serif', serif;
+            font-size: 32px;
+            color: var(--terracotta);
+        }
+
+        .award-name {
+            font-size: 18px;
+        }
+
+        .award-org {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        /* CTA - Minimal */
+        .cta-section {
+            padding: 200px 80px;
+            text-align: center;
+            background: var(--text);
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 56px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 48px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 56px;
+            background: var(--white);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: var(--terracotta);
+            color: var(--white);
+        }
+
+        /* Footer - Minimal */
+        .footer {
+            padding: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-left {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .footer-links-grid {
+            display: flex;
+            gap: 100px;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            font-size: 14px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--text);
+        }
+
+        .footer-bottom {
+            padding: 32px 80px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav { padding: 24px 40px; }
+            .hero { padding: 140px 40px 100px; }
+            .hero-content { grid-template-columns: 1fr; gap: 60px; }
+            .hero-text h1 { font-size: 48px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .award-item { grid-template-columns: 1fr; gap: 8px; }
+            .award-org { text-align: left; }
+            .footer { flex-direction: column; gap: 60px; }
+            .footer-links-grid { gap: 60px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-text h1 { font-size: 36px; }
+            .section-title { font-size: 32px; }
+            .about-headline { font-size: 28px; }
+            .stats-grid { flex-wrap: wrap; gap: 48px; }
+            .team-grid { grid-template-columns: 1fr; }
+            .footer-links-grid { flex-wrap: wrap; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="logo">Chamankar</a>
+        <ul class="nav-links">
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Awards</a></li>
+        </ul>
+        <a href="#" class="nav-cta">Contact</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Architecture That Speaks in Silence</h1>
+                <p>We believe in the power of restraint. For 25 years, we've created spaces that let their purpose breathe through thoughtful, minimal design.</p>
+                <a href="#" class="hero-link">
+                    View our work
+                    <span></span>
+                </a>
+            </div>
+            <div class="hero-image">
+                <span class="image-placeholder">Featured Project</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects-section">
+        <div class="section-header">
+            <h2 class="section-title">Selected Projects</h2>
+            <a href="#" class="section-link">
+                View all
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        <div class="projects-grid">
+            <div class="project-item">
+                <div class="project-image">
+                    <span class="image-placeholder">Image</span>
+                </div>
+                <h3 class="project-name">The Horizon Residences</h3>
+                <p class="project-meta">Residential, Mumbai</p>
+            </div>
+            <div class="project-item">
+                <div class="project-image">
+                    <span class="image-placeholder">Image</span>
+                </div>
+                <h3 class="project-name">Vertex Business Park</h3>
+                <p class="project-meta">Commercial, Mumbai</p>
+            </div>
+            <div class="project-item">
+                <div class="project-image">
+                    <span class="image-placeholder">Image</span>
+                </div>
+                <h3 class="project-name">Civic Community Center</h3>
+                <p class="project-meta">Government, Mumbai</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section">
+        <p class="about-eyebrow">About Us</p>
+        <h2 class="about-headline">We believe architecture should enhance life without demanding attention. Our work is defined by what we choose to leave out.</h2>
+        <p class="about-text">Founded in 1999, Chamankar Group has spent over two decades refining the art of purposeful design. We create spaces that feel inevitable, where every element serves a function and nothing competes for attention.</p>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">25</div>
+                <div class="stat-label">Years</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">150</div>
+                <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2M</div>
+                <div class="stat-label">Sq. Ft.</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">40</div>
+                <div class="stat-label">Awards</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section">
+        <h2 class="section-title">Our Practice</h2>
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-number">01</div>
+                <h3>Residential Design</h3>
+                <p>Homes designed around how you actually live. We create spaces that adapt to your rhythms and grow with your family.</p>
+            </div>
+            <div class="service-item">
+                <div class="service-number">02</div>
+                <h3>Commercial Architecture</h3>
+                <p>Workplaces that foster focus and creativity. Environments where great work happens naturally.</p>
+            </div>
+            <div class="service-item">
+                <div class="service-number">03</div>
+                <h3>Public Infrastructure</h3>
+                <p>Civic spaces that serve communities with dignity and purpose. Architecture for the common good.</p>
+            </div>
+            <div class="service-item">
+                <div class="service-number">04</div>
+                <h3>Interior Architecture</h3>
+                <p>The continuation of our exterior philosophy within. Every detail considered, nothing superfluous.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="team-section">
+        <h2 class="section-title">Leadership</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Rajesh Chamankar</h4>
+                <p class="member-role">Founder</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Priya Sharma</h4>
+                <p class="member-role">Principal Architect</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Amit Desai</h4>
+                <p class="member-role">Director</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"><span class="image-placeholder">Photo</span></div>
+                <h4 class="member-name">Sneha Patel</h4>
+                <p class="member-role">Design Lead</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards -->
+    <section class="awards-section">
+        <h2 class="section-title">Recognition</h2>
+        <div class="awards-list">
+            <div class="award-item">
+                <div class="award-year">2024</div>
+                <div class="award-name">Best Residential Project</div>
+                <div class="award-org">Architecture India</div>
+            </div>
+            <div class="award-item">
+                <div class="award-year">2023</div>
+                <div class="award-name">Sustainable Design Award</div>
+                <div class="award-org">Green Building Council</div>
+            </div>
+            <div class="award-item">
+                <div class="award-year">2022</div>
+                <div class="award-name">Excellence in Construction</div>
+                <div class="award-org">CREDAI Mumbai</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Let's Work Together</h2>
+        <p>We'd love to hear about your project.</p>
+        <a href="#" class="cta-btn">Start a Conversation</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            <div class="footer-logo">Chamankar</div>
+            <p class="footer-tagline">Architecture that speaks through restraint. Based in Mumbai since 1999.</p>
+        </div>
+        <div class="footer-links-grid">
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <span>&copy; 2024 Chamankar Group</span>
+        <span>Privacy &middot; Terms</span>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

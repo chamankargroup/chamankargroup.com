@@ -4,17 +4,17 @@
       <div v-if="show" class="modal-overlay" @click="closeModal">
         <div class="modal-container" @click.stop>
           <div class="modal-header">
-            <h2 class="text-2xl font-bold text-gray-900">{{ project.name }}</h2>
+            <h2 class="font-display text-2xl md:text-3xl font-medium text-text-dark">{{ project.name }}</h2>
             <button @click="closeModal" class="close-button">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
               </svg>
             </button>
           </div>
 
           <div class="modal-body">
             <!-- Image Gallery -->
-            <div class="mb-6">
+            <div class="mb-8">
               <div class="main-image-container">
                 <img
                   v-if="displayImages.length > 0"
@@ -23,19 +23,24 @@
                   class="main-image"
                 >
                 <div v-else class="placeholder-image">
-                  <span class="text-8xl">🏢</span>
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8a847e" stroke-width="1.5">
+                    <rect x="4" y="2" width="16" height="20" rx="2"/>
+                    <path d="M9 22v-4h6v4"/>
+                    <line x1="8" y1="6" x2="16" y2="6"/>
+                    <line x1="8" y1="10" x2="16" y2="10"/>
+                  </svg>
                 </div>
 
                 <!-- Navigation Arrows -->
                 <div v-if="displayImages.length > 1" class="image-nav-buttons">
-                  <button @click="previousImage" class="nav-button nav-button-left">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                  <button @click="previousImage" class="nav-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M15 18l-6-6 6-6"/>
                     </svg>
                   </button>
-                  <button @click="nextImage" class="nav-button nav-button-right">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  <button @click="nextImage" class="nav-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M9 18l6-6-6-6"/>
                     </svg>
                   </button>
                 </div>
@@ -64,8 +69,9 @@
               <div class="detail-item">
                 <div class="detail-label">Location</div>
                 <div class="detail-value">
-                  <svg class="w-5 h-5 text-primary-600 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4936a" stroke-width="2" class="inline mr-2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
                   </svg>
                   {{ project.location }}
                 </div>
@@ -81,8 +87,11 @@
               <div v-if="project.completionDate" class="detail-item">
                 <div class="detail-label">Completion Date</div>
                 <div class="detail-value">
-                  <svg class="w-5 h-5 text-primary-600 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4936a" stroke-width="2" class="inline mr-2">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
                   </svg>
                   {{ project.completionDate }}
                 </div>
@@ -109,18 +118,18 @@
             </div>
 
             <!-- Description -->
-            <div class="mt-6">
-              <h3 class="text-lg font-semibold text-gray-900 mb-3">Project Description</h3>
-              <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ project.description }}</p>
+            <div class="mt-8">
+              <h3 class="font-display text-xl font-medium text-text-dark mb-4">Project Description</h3>
+              <p class="text-text-medium leading-relaxed whitespace-pre-line">{{ project.description }}</p>
             </div>
 
             <!-- Certifications -->
-            <div v-if="project.certifications && project.certifications.length > 0" class="mt-6">
-              <h3 class="text-lg font-semibold text-gray-900 mb-3">Certifications & Awards</h3>
+            <div v-if="project.certifications && project.certifications.length > 0" class="mt-8">
+              <h3 class="font-display text-xl font-medium text-text-dark mb-4">Certifications & Awards</h3>
               <div class="certifications-list">
                 <div v-for="(cert, index) in project.certifications" :key="index" class="certification-item">
-                  <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c4936a" stroke-width="2">
+                    <path d="M12 15l-2 5l9-9l-9-9l2 5l-5 4z" transform="rotate(45 12 12)"/>
                   </svg>
                   <span>{{ cert }}</span>
                 </div>
@@ -128,13 +137,15 @@
             </div>
 
             <!-- Features/Highlights -->
-            <div v-if="project.features && project.features.length > 0" class="mt-6">
-              <h3 class="text-lg font-semibold text-gray-900 mb-3">Key Features</h3>
+            <div v-if="project.features && project.features.length > 0" class="mt-8">
+              <h3 class="font-display text-xl font-medium text-text-dark mb-4">Key Features</h3>
               <ul class="features-list">
                 <li v-for="(feature, index) in project.features" :key="index" class="feature-item">
-                  <svg class="w-5 h-5 text-primary-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
+                  <div class="feature-check">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </div>
                   <span>{{ feature }}</span>
                 </li>
               </ul>
@@ -222,18 +233,19 @@ if (typeof window !== 'undefined') {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(46, 42, 38, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   padding: 1rem;
   overflow-y: auto;
+  backdrop-filter: blur(4px);
 }
 
 .modal-container {
-  background: white;
-  border-radius: 1rem;
+  background: #f5f1ec;
+  border-radius: 2rem;
   width: 100%;
   max-width: 1000px;
   max-height: 90vh;
@@ -245,37 +257,41 @@ if (typeof window !== 'undefined') {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e8ddd4;
   position: sticky;
   top: 0;
-  background: white;
+  background: #f5f1ec;
   z-index: 10;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 2rem 2rem 0 0;
 }
 
 .close-button {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s;
-  color: #6b7280;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+  color: #5a544e;
 }
 
 .close-button:hover {
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: #e8ddd4;
+  color: #2e2a26;
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .main-image-container {
   position: relative;
   width: 100%;
   height: 400px;
-  background: #f3f4f6;
-  border-radius: 0.75rem;
+  background: #e8ddd4;
+  border-radius: 1.5rem;
   overflow: hidden;
 }
 
@@ -291,7 +307,7 @@ if (typeof window !== 'undefined') {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #fef3e7 0%, #e0ebff 100%);
+  background: linear-gradient(135deg, #e8ddd4 0%, #d4c4b0 100%);
 }
 
 .image-nav-buttons {
@@ -309,23 +325,29 @@ if (typeof window !== 'undefined') {
 
 .nav-button {
   pointer-events: all;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 50%;
-  padding: 0.75rem;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #5c524a;
 }
 
 .nav-button:hover {
   background: white;
   transform: scale(1.1);
+  color: #c4936a;
 }
 
 .image-counter {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(92, 82, 74, 0.9);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
@@ -345,19 +367,19 @@ if (typeof window !== 'undefined') {
   flex-shrink: 0;
   width: 80px;
   height: 80px;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   overflow: hidden;
-  border: 2px solid transparent;
-  transition: all 0.2s;
+  border: 3px solid transparent;
+  transition: all 0.3s;
 }
 
 .thumbnail:hover {
-  border-color: #f5911f;
+  border-color: #c4936a;
 }
 
 .thumbnail-active {
-  border-color: #f5911f;
-  box-shadow: 0 0 0 3px rgba(245, 145, 31, 0.2);
+  border-color: #c4936a;
+  box-shadow: 0 0 0 3px rgba(196, 147, 106, 0.2);
 }
 
 .thumbnail-img {
@@ -372,8 +394,8 @@ if (typeof window !== 'undefined') {
   gap: 1.5rem;
   margin-top: 1.5rem;
   padding: 1.5rem;
-  background: #f9fafb;
-  border-radius: 0.75rem;
+  background: white;
+  border-radius: 1.5rem;
 }
 
 .detail-item {
@@ -383,24 +405,26 @@ if (typeof window !== 'undefined') {
 }
 
 .detail-label {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #6b7280;
+  color: #8a847e;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 
 .detail-value {
   font-size: 1rem;
-  color: #111827;
+  color: #2e2a26;
   font-weight: 500;
+  display: flex;
+  align-items: center;
 }
 
 .type-badge {
   display: inline-block;
-  padding: 0.375rem 0.75rem;
-  background: #fef3e7;
-  color: #c47419;
+  padding: 0.5rem 1rem;
+  background: rgba(196, 147, 106, 0.15);
+  color: #a67b52;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -408,25 +432,25 @@ if (typeof window !== 'undefined') {
 
 .status-badge {
   display: inline-block;
-  padding: 0.375rem 0.75rem;
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 600;
 }
 
 .status-completed {
-  background: #d1fae5;
-  color: #065f46;
+  background: rgba(168, 181, 160, 0.2);
+  color: #8a9b80;
 }
 
 .status-ongoing {
-  background: #dbeafe;
-  color: #1e40af;
+  background: rgba(196, 147, 106, 0.15);
+  color: #a67b52;
 }
 
 .status-upcoming {
-  background: #fef3c7;
-  color: #92400e;
+  background: rgba(92, 82, 74, 0.1);
+  color: #5c524a;
 }
 
 .certifications-list {
@@ -439,10 +463,10 @@ if (typeof window !== 'undefined') {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem;
-  background: #f9fafb;
-  border-radius: 0.5rem;
-  border-left: 3px solid #f5911f;
+  padding: 1rem;
+  background: white;
+  border-radius: 1rem;
+  border-left: 3px solid #c4936a;
 }
 
 .features-list {
@@ -455,9 +479,22 @@ if (typeof window !== 'undefined') {
   display: flex;
   align-items: start;
   gap: 0.75rem;
-  padding: 0.75rem;
-  background: #f9fafb;
-  border-radius: 0.5rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 1rem;
+  color: #5a544e;
+}
+
+.feature-check {
+  width: 24px;
+  height: 24px;
+  background: rgba(168, 181, 160, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #8a9b80;
 }
 
 /* Modal Transition */
@@ -478,16 +515,31 @@ if (typeof window !== 'undefined') {
 
 .modal-enter-from .modal-container,
 .modal-leave-to .modal-container {
-  transform: scale(0.9);
+  transform: scale(0.95) translateY(20px);
 }
 
 @media (max-width: 768px) {
+  .modal-container {
+    border-radius: 1.5rem;
+  }
+
+  .modal-header {
+    padding: 1rem 1.5rem;
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
   .main-image-container {
-    height: 300px;
+    height: 280px;
+    border-radius: 1rem;
   }
 
   .details-grid {
     grid-template-columns: 1fr;
+    border-radius: 1rem;
   }
 
   .features-list {

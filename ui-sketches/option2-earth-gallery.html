@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamankar Group - Earth Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-sand: #f5f0e8;
+            --bg-cream: #faf8f4;
+            --terracotta: #c86b4a;
+            --terracotta-dark: #a85638;
+            --olive: #6b7c5a;
+            --olive-light: #8a9a78;
+            --clay: #d4a574;
+            --text-dark: #2d2a26;
+            --text-medium: #5a554d;
+            --text-light: #8c857a;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 28px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: all 0.4s;
+        }
+
+        .nav.scrolled {
+            background: rgba(250, 248, 244, 0.98);
+            padding: 18px 48px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 44px;
+            height: 44px;
+            background: var(--terracotta);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .logo-text {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 22px;
+            color: var(--text-dark);
+            letter-spacing: 1px;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-center a {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-medium);
+            transition: color 0.3s;
+        }
+
+        .nav-center a:hover {
+            color: var(--terracotta);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 14px 32px;
+            background: var(--text-dark);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--terracotta);
+        }
+
+        /* Hero Gallery */
+        .hero-gallery {
+            padding: 140px 48px 80px;
+            background: var(--bg-cream);
+        }
+
+        .hero-intro {
+            max-width: 700px;
+            margin-bottom: 80px;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            margin-bottom: 24px;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--terracotta);
+        }
+
+        .hero-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 64px;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 28px;
+            color: var(--text-dark);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-medium);
+            max-width: 550px;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(3, 280px);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: span 7;
+            grid-row: span 2;
+        }
+
+        .gallery-item:nth-child(2) {
+            grid-column: span 5;
+        }
+
+        .gallery-item:nth-child(3) {
+            grid-column: span 5;
+        }
+
+        .gallery-item:nth-child(4) {
+            grid-column: span 4;
+        }
+
+        .gallery-item:nth-child(5) {
+            grid-column: span 4;
+        }
+
+        .gallery-item:nth-child(6) {
+            grid-column: span 4;
+        }
+
+        .gallery-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--bg-sand), #e8dfd2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover .gallery-bg {
+            transform: scale(1.05);
+        }
+
+        .gallery-placeholder {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(45,42,38,0.9) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 32px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s;
+        }
+
+        .gallery-item:hover .gallery-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-category {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 8px;
+        }
+
+        .gallery-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 24px;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .gallery-location {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 80px 48px;
+            background: var(--olive);
+            color: var(--white);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 56px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 120px 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            background: var(--bg-cream);
+        }
+
+        .about-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .about-img {
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--clay), var(--terracotta));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-img:first-child {
+            margin-top: 60px;
+        }
+
+        .about-content h2 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 44px;
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: 32px;
+            color: var(--text-dark);
+        }
+
+        .about-content p {
+            font-size: 16px;
+            line-height: 1.9;
+            color: var(--text-medium);
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--terracotta);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Services */
+        .services-section {
+            padding: 120px 48px;
+            background: var(--bg-sand);
+        }
+
+        .services-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+        }
+
+        .services-header h2 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 44px;
+            font-weight: 400;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 48px;
+            transition: all 0.4s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--olive-light), var(--olive));
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            color: var(--text-medium);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .service-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--terracotta);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-link:hover svg {
+            transform: translateX(4px);
+        }
+
+        .service-link svg {
+            transition: transform 0.3s;
+        }
+
+        /* Team Preview */
+        .team-preview {
+            padding: 120px 48px;
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .team-header h2 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 44px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .team-header p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-photo {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--olive), var(--olive-light));
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .member-role {
+            font-size: 14px;
+            color: var(--clay);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 140px 48px;
+            background: var(--terracotta);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 52px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 56px;
+            background: var(--white);
+            color: var(--terracotta);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 48px;
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand .logo-mark {
+            background: var(--terracotta);
+        }
+
+        .footer-brand .logo-text {
+            color: var(--white);
+        }
+
+        .footer-tagline {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--clay);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 48px; }
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+            .gallery-item:nth-child(1) { grid-column: span 2; grid-row: auto; }
+            .gallery-item:nth-child(n) { grid-column: span 1; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .about-section { grid-template-columns: 1fr; gap: 60px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-center { display: none; }
+            .hero-title { font-size: 36px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-item:nth-child(n) { grid-column: auto; }
+            .stats-bar { grid-template-columns: 1fr; gap: 32px; }
+            .team-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="logo">
+            <div class="logo-mark">CG</div>
+            <span class="logo-text">Chamankar</span>
+        </a>
+        <ul class="nav-center">
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Awards</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="#" class="nav-btn">Get in Touch</a>
+        </div>
+    </nav>
+
+    <!-- Hero Gallery -->
+    <section class="hero-gallery">
+        <div class="hero-intro">
+            <div class="hero-label">Architecture Studio</div>
+            <h1 class="hero-title">Where Vision Meets Structure</h1>
+            <p class="hero-description">Transforming Mumbai's landscape for over 25 years through thoughtful architecture that harmonizes with its environment.</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="gallery-bg">
+                    <span class="gallery-placeholder">Featured Project</span>
+                </div>
+                <div class="gallery-overlay"></div>
+                <div class="gallery-info">
+                    <div class="gallery-category">Residential</div>
+                    <h3 class="gallery-title">The Horizon Residences</h3>
+                    <p class="gallery-location">Worli Sea Face, Mumbai</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-bg">
+                    <span class="gallery-placeholder">Project</span>
+                </div>
+                <div class="gallery-overlay"></div>
+                <div class="gallery-info">
+                    <div class="gallery-category">Commercial</div>
+                    <h3 class="gallery-title">Vertex Tower</h3>
+                    <p class="gallery-location">BKC, Mumbai</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-bg">
+                    <span class="gallery-placeholder">Project</span>
+                </div>
+                <div class="gallery-overlay"></div>
+                <div class="gallery-info">
+                    <div class="gallery-category">Government</div>
+                    <h3 class="gallery-title">Civic Center</h3>
+                    <p class="gallery-location">Andheri, Mumbai</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-bg">
+                    <span class="gallery-placeholder">Project</span>
+                </div>
+                <div class="gallery-overlay"></div>
+                <div class="gallery-info">
+                    <div class="gallery-category">Residential</div>
+                    <h3 class="gallery-title">Palm Heights</h3>
+                    <p class="gallery-location">Powai, Mumbai</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-bg">
+                    <span class="gallery-placeholder">Project</span>
+                </div>
+                <div class="gallery-overlay"></div>
+                <div class="gallery-info">
+                    <div class="gallery-category">Commercial</div>
+                    <h3 class="gallery-title">Trade Plaza</h3>
+                    <p class="gallery-location">Lower Parel, Mumbai</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-bg">
+                    <span class="gallery-placeholder">Project</span>
+                </div>
+                <div class="gallery-overlay"></div>
+                <div class="gallery-info">
+                    <div class="gallery-category">Residential</div>
+                    <h3 class="gallery-title">Green Valley</h3>
+                    <p class="gallery-location">Bandra, Mumbai</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value">25+</div>
+            <div class="stat-label">Years of Excellence</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">150+</div>
+            <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">2M+</div>
+            <div class="stat-label">Sq. Ft. Built</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">40+</div>
+            <div class="stat-label">Industry Awards</div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section">
+        <div class="about-images">
+            <div class="about-img">
+                <span class="gallery-placeholder">Image</span>
+            </div>
+            <div class="about-img">
+                <span class="gallery-placeholder">Image</span>
+            </div>
+        </div>
+        <div class="about-content">
+            <h2>Building Dreams, Creating Landmarks</h2>
+            <p>At Chamankar Group, we don't just construct buildings; we craft experiences. Our philosophy centers on creating spaces that enhance the quality of life while respecting the environment.</p>
+            <p>With a team of visionary architects and skilled engineers, we bring together innovation and tradition to deliver projects that stand the test of time.</p>
+            <div class="about-features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Quality Assured</h4>
+                        <p>ISO certified processes</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>On-Time Delivery</h4>
+                        <p>98% delivery rate</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Expert Team</h4>
+                        <p>200+ professionals</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Sustainable</h4>
+                        <p>Green building certified</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section">
+        <div class="services-header">
+            <h2>Our Expertise</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    </svg>
+                </div>
+                <h3>Residential Design</h3>
+                <p>From luxury apartments to independent villas, we design homes that reflect your personality and enhance your lifestyle.</p>
+                <a href="#" class="service-link">
+                    Learn More
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <rect x="4" y="2" width="16" height="20" rx="2"/>
+                        <path d="M9 22v-4h6v4"/>
+                    </svg>
+                </div>
+                <h3>Commercial Spaces</h3>
+                <p>Modern office complexes and retail spaces designed to boost productivity and create memorable customer experiences.</p>
+                <a href="#" class="service-link">
+                    Learn More
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M3 21h18M9 21V8l-6 3v10M21 21V10l-6-3v14M12 8V2l3 2"/>
+                    </svg>
+                </div>
+                <h3>Government Projects</h3>
+                <p>Public infrastructure that serves communities with functionality, accessibility, and civic pride.</p>
+                <a href="#" class="service-link">
+                    Learn More
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Preview -->
+    <section class="team-preview">
+        <div class="team-header">
+            <h2>Leadership Team</h2>
+            <p>Meet the visionaries behind Chamankar Group</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-photo">
+                    <span class="gallery-placeholder">Photo</span>
+                </div>
+                <h4 class="member-name">Rajesh Chamankar</h4>
+                <p class="member-role">Founder & Chairman</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo">
+                    <span class="gallery-placeholder">Photo</span>
+                </div>
+                <h4 class="member-name">Priya Sharma</h4>
+                <p class="member-role">Chief Architect</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo">
+                    <span class="gallery-placeholder">Photo</span>
+                </div>
+                <h4 class="member-name">Amit Desai</h4>
+                <p class="member-role">Director, Construction</p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo">
+                    <span class="gallery-placeholder">Photo</span>
+                </div>
+                <h4 class="member-name">Sneha Patel</h4>
+                <p class="member-role">Head of Design</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Build Your Vision?</h2>
+        <p>Let's discuss your project and explore how we can bring your architectural dreams to life.</p>
+        <a href="#" class="cta-btn">Start a Conversation</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">
+                    <div class="logo-mark">CG</div>
+                    <span class="logo-text">Chamankar</span>
+                </div>
+                <p class="footer-tagline">Building dreams and creating landmarks across Mumbai for over 25 years. Award-winning architecture that stands the test of time.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Residential</a></li>
+                    <li><a href="#">Commercial</a></li>
+                    <li><a href="#">Government</a></li>
+                    <li><a href="#">Interior Design</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">info@chamankar.com</a></li>
+                    <li><a href="#">+91 22 1234 5678</a></li>
+                    <li><a href="#">Mumbai, Maharashtra</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Chamankar Group. All rights reserved.</span>
+            <span>Privacy | Terms | Sitemap</span>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>
