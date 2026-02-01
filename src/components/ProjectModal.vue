@@ -3,152 +3,238 @@
     <Transition name="modal">
       <div v-if="show" class="modal-overlay" @click="closeModal">
         <div class="modal-container" @click.stop>
-          <div class="modal-header">
-            <h2 class="font-display text-2xl md:text-3xl font-medium text-text-dark">{{ project.name }}</h2>
-            <button @click="closeModal" class="close-button">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 6L6 18M6 6l12 12"/>
-              </svg>
-            </button>
+          <!-- Close Button -->
+          <button @click="closeModal" class="close-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+
+          <!-- Main Content Grid -->
+          <div class="modal-content">
+            <!-- Left Sidebar - Project Info -->
+            <aside class="project-sidebar">
+              <div class="sidebar-content">
+                <!-- Project Title -->
+                <div class="project-header">
+                  <h1 class="project-title">{{ project.name }}</h1>
+                  <p class="project-location">{{ project.location }}</p>
+                </div>
+
+                <!-- Project Metadata -->
+                <div class="project-meta">
+                  <div v-if="project.completionDate || project.year" class="meta-item">
+                    <span class="meta-label">Year</span>
+                    <span class="meta-value">{{ project.year || project.completionDate }}</span>
+                  </div>
+
+                  <div v-if="project.client" class="meta-item">
+                    <span class="meta-label">Client</span>
+                    <span class="meta-value">{{ project.client }}</span>
+                  </div>
+
+                  <div class="meta-item">
+                    <span class="meta-label">Typology</span>
+                    <span class="meta-value">{{ project.type }}</span>
+                  </div>
+
+                  <div v-if="project.area" class="meta-item">
+                    <span class="meta-label">Size</span>
+                    <span class="meta-value">{{ project.area }}</span>
+                  </div>
+
+                  <div v-if="project.status" class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">{{ project.status }}</span>
+                  </div>
+                </div>
+
+              </div>
+            </aside>
+
+            <!-- Center - Image Gallery -->
+            <main class="project-gallery">
+              <div class="gallery-container">
+                <!-- Main Image -->
+                <div class="main-image-wrapper">
+                  <img
+                    v-if="displayImages.length > 0"
+                    :src="displayImages[currentImageIndex]"
+                    :alt="project.name"
+                    class="main-image"
+                  >
+                  <div v-else class="placeholder-image">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8a847e" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5"/>
+                      <path d="M21 15l-5-5L5 21"/>
+                    </svg>
+                  </div>
+
+                  <!-- Navigation Arrows -->
+                  <div v-if="displayImages.length > 1" class="gallery-nav">
+                    <button @click="previousImage" class="nav-arrow nav-prev">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                      </svg>
+                    </button>
+                    <button @click="nextImage" class="nav-arrow nav-next">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <!-- Image Counter -->
+                  <div v-if="displayImages.length > 1" class="image-counter">
+                    <span>{{ currentImageIndex + 1 }}</span>
+                    <span class="counter-divider">/</span>
+                    <span>{{ displayImages.length }}</span>
+                  </div>
+                </div>
+
+                <!-- Thumbnail Strip -->
+                <div v-if="displayImages.length > 1" class="thumbnail-strip">
+                  <button
+                    v-for="(image, index) in displayImages"
+                    :key="index"
+                    @click="currentImageIndex = index"
+                    :class="['thumbnail', { 'thumbnail-active': index === currentImageIndex }]"
+                  >
+                    <img :src="image" :alt="`${project.name} ${index + 1}`">
+                  </button>
+                </div>
+              </div>
+            </main>
+
+            <!-- Right - Description -->
+            <aside class="project-description">
+              <div class="description-content">
+                <p class="description-text">{{ project.description }}</p>
+
+                <!-- Features if available -->
+                <div v-if="project.features && project.features.length > 0" class="features-section">
+                  <h3 class="features-title">Key Features</h3>
+                  <ul class="features-list">
+                    <li v-for="(feature, index) in project.features" :key="index">
+                      {{ feature }}
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Certifications if available -->
+                <div v-if="project.certifications && project.certifications.length > 0" class="certifications-section">
+                  <h3 class="certifications-title">Certifications</h3>
+                  <ul class="certifications-list">
+                    <li v-for="(cert, index) in project.certifications" :key="index">
+                      {{ cert }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
           </div>
 
-          <div class="modal-body">
+          <!-- Mobile Layout - Scrollable -->
+          <div class="modal-content-mobile">
+            <!-- Header with close -->
+            <div class="mobile-header">
+              <h1 class="mobile-title">{{ project.name }}</h1>
+              <p class="mobile-location">{{ project.location }}</p>
+            </div>
+
             <!-- Image Gallery -->
-            <div class="mb-8">
-              <div class="main-image-container">
+            <div class="mobile-gallery">
+              <div class="mobile-image-wrapper">
                 <img
                   v-if="displayImages.length > 0"
                   :src="displayImages[currentImageIndex]"
                   :alt="project.name"
-                  class="main-image"
+                  class="mobile-main-image"
                 >
-                <div v-else class="placeholder-image">
-                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8a847e" stroke-width="1.5">
-                    <rect x="4" y="2" width="16" height="20" rx="2"/>
-                    <path d="M9 22v-4h6v4"/>
-                    <line x1="8" y1="6" x2="16" y2="6"/>
-                    <line x1="8" y1="10" x2="16" y2="10"/>
+                <div v-else class="mobile-placeholder">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8a847e" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <path d="M21 15l-5-5L5 21"/>
                   </svg>
                 </div>
 
-                <!-- Navigation Arrows -->
-                <div v-if="displayImages.length > 1" class="image-nav-buttons">
-                  <button @click="previousImage" class="nav-button">
+                <!-- Mobile Nav -->
+                <div v-if="displayImages.length > 1" class="mobile-gallery-nav">
+                  <button @click="previousImage" class="mobile-nav-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M15 18l-6-6 6-6"/>
                     </svg>
                   </button>
-                  <button @click="nextImage" class="nav-button">
+                  <span class="mobile-counter">{{ currentImageIndex + 1 }} / {{ displayImages.length }}</span>
+                  <button @click="nextImage" class="mobile-nav-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M9 18l6-6-6-6"/>
                     </svg>
                   </button>
                 </div>
-
-                <!-- Image Counter -->
-                <div v-if="displayImages.length > 1" class="image-counter">
-                  {{ currentImageIndex + 1 }} / {{ displayImages.length }}
-                </div>
               </div>
 
-              <!-- Thumbnail Gallery -->
-              <div v-if="displayImages.length > 1" class="thumbnail-gallery">
+              <!-- Mobile Thumbnails -->
+              <div v-if="displayImages.length > 1" class="mobile-thumbnails">
                 <button
                   v-for="(image, index) in displayImages"
                   :key="index"
                   @click="currentImageIndex = index"
-                  :class="['thumbnail', { 'thumbnail-active': index === currentImageIndex }]"
+                  :class="['mobile-thumb', { 'mobile-thumb-active': index === currentImageIndex }]"
                 >
-                  <img :src="image" :alt="`${project.name} ${index + 1}`" class="thumbnail-img">
+                  <img :src="image" :alt="`${project.name} ${index + 1}`">
                 </button>
               </div>
             </div>
 
-            <!-- Project Details Grid -->
-            <div class="details-grid">
-              <div class="detail-item">
-                <div class="detail-label">Location</div>
-                <div class="detail-value">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4936a" stroke-width="2" class="inline mr-2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
-                  {{ project.location }}
+            <!-- Mobile Info Grid -->
+            <div class="mobile-info">
+              <div class="mobile-meta-grid">
+                <div v-if="project.completionDate || project.year" class="mobile-meta-item">
+                  <span class="mobile-meta-label">Year</span>
+                  <span class="mobile-meta-value">{{ project.year || project.completionDate }}</span>
+                </div>
+                <div v-if="project.client" class="mobile-meta-item">
+                  <span class="mobile-meta-label">Client</span>
+                  <span class="mobile-meta-value">{{ project.client }}</span>
+                </div>
+                <div class="mobile-meta-item">
+                  <span class="mobile-meta-label">Type</span>
+                  <span class="mobile-meta-value">{{ project.type }}</span>
+                </div>
+                <div v-if="project.area" class="mobile-meta-item">
+                  <span class="mobile-meta-label">Size</span>
+                  <span class="mobile-meta-value">{{ project.area }}</span>
+                </div>
+                <div v-if="project.status" class="mobile-meta-item">
+                  <span class="mobile-meta-label">Status</span>
+                  <span class="mobile-meta-value">{{ project.status }}</span>
                 </div>
               </div>
 
-              <div class="detail-item">
-                <div class="detail-label">Project Type</div>
-                <div class="detail-value">
-                  <span class="type-badge">{{ project.type }}</span>
-                </div>
+              <!-- Description -->
+              <div class="mobile-description">
+                <p>{{ project.description }}</p>
               </div>
 
-              <div v-if="project.completionDate" class="detail-item">
-                <div class="detail-label">Completion Date</div>
-                <div class="detail-value">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4936a" stroke-width="2" class="inline mr-2">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>
-                  {{ project.completionDate }}
-                </div>
+              <!-- Features -->
+              <div v-if="project.features && project.features.length > 0" class="mobile-features">
+                <h3>Key Features</h3>
+                <ul>
+                  <li v-for="(feature, index) in project.features" :key="index">{{ feature }}</li>
+                </ul>
               </div>
 
-              <div v-if="project.client" class="detail-item">
-                <div class="detail-label">Client</div>
-                <div class="detail-value">{{ project.client }}</div>
+              <!-- Certifications -->
+              <div v-if="project.certifications && project.certifications.length > 0" class="mobile-certifications">
+                <h3>Certifications</h3>
+                <ul>
+                  <li v-for="(cert, index) in project.certifications" :key="index">{{ cert }}</li>
+                </ul>
               </div>
 
-              <div v-if="project.area" class="detail-item">
-                <div class="detail-label">Project Area</div>
-                <div class="detail-value">{{ project.area }}</div>
-              </div>
-
-              <div v-if="project.status" class="detail-item">
-                <div class="detail-label">Status</div>
-                <div class="detail-value">
-                  <span :class="['status-badge', getStatusClass(project.status)]">
-                    {{ project.status }}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="mt-8">
-              <h3 class="font-display text-xl font-medium text-text-dark mb-4">Project Description</h3>
-              <p class="text-text-medium leading-relaxed whitespace-pre-line">{{ project.description }}</p>
-            </div>
-
-            <!-- Certifications -->
-            <div v-if="project.certifications && project.certifications.length > 0" class="mt-8">
-              <h3 class="font-display text-xl font-medium text-text-dark mb-4">Certifications & Awards</h3>
-              <div class="certifications-list">
-                <div v-for="(cert, index) in project.certifications" :key="index" class="certification-item">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c4936a" stroke-width="2">
-                    <path d="M12 15l-2 5l9-9l-9-9l2 5l-5 4z" transform="rotate(45 12 12)"/>
-                  </svg>
-                  <span>{{ cert }}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Features/Highlights -->
-            <div v-if="project.features && project.features.length > 0" class="mt-8">
-              <h3 class="font-display text-xl font-medium text-text-dark mb-4">Key Features</h3>
-              <ul class="features-list">
-                <li v-for="(feature, index) in project.features" :key="index" class="feature-item">
-                  <div class="feature-check">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                      <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                  </div>
-                  <span>{{ feature }}</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -198,18 +284,13 @@ const previousImage = () => {
     : currentImageIndex.value - 1
 }
 
-const getStatusClass = (status) => {
-  const statusLower = status?.toLowerCase()
-  if (statusLower === 'completed') return 'status-completed'
-  if (statusLower === 'ongoing' || statusLower === 'in progress') return 'status-ongoing'
-  if (statusLower === 'upcoming') return 'status-upcoming'
-  return ''
-}
-
 // Reset image index when modal opens
 watch(() => props.show, (newVal) => {
   if (newVal) {
     currentImageIndex.value = 0
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
   }
 })
 
@@ -229,69 +310,142 @@ if (typeof window !== 'undefined') {
 <style scoped>
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(46, 42, 38, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.92);
   z-index: 9999;
-  padding: 1rem;
   overflow-y: auto;
-  backdrop-filter: blur(4px);
 }
 
 .modal-container {
-  background: #f5f1ec;
-  border-radius: 2rem;
+  min-height: 100vh;
   width: 100%;
-  max-width: 1000px;
-  max-height: 90vh;
-  overflow-y: auto;
   position: relative;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid #e8ddd4;
-  position: sticky;
-  top: 0;
-  background: #f5f1ec;
-  z-index: 10;
-  border-radius: 2rem 2rem 0 0;
 }
 
 .close-button {
-  width: 44px;
-  height: 44px;
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: white;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  transition: all 0.3s;
-  color: #5a544e;
 }
 
 .close-button:hover {
-  background-color: #e8ddd4;
-  color: #2e2a26;
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
 }
 
-.modal-body {
-  padding: 2rem;
+/* Desktop Layout */
+.modal-content {
+  display: none;
+  min-height: 100vh;
+  padding: 4rem 3rem;
 }
 
-.main-image-container {
+@media (min-width: 1024px) {
+  .modal-content {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    gap: 3rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .modal-content {
+    grid-template-columns: 300px 1fr 360px;
+    gap: 4rem;
+    padding: 5rem 4rem;
+  }
+}
+
+/* Left Sidebar */
+.project-sidebar {
+  position: sticky;
+  top: 4rem;
+  height: fit-content;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.project-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: white;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.project-location {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.project-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.meta-value {
+  font-size: 0.95rem;
+  color: white;
+  font-weight: 400;
+}
+
+/* Center Gallery */
+.project-gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.main-image-wrapper {
   position: relative;
   width: 100%;
-  height: 400px;
-  background: #e8ddd4;
-  border-radius: 1.5rem;
+  aspect-ratio: 16 / 10;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
   overflow: hidden;
 }
 
@@ -307,197 +461,381 @@ if (typeof window !== 'undefined') {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #e8ddd4 0%, #d4c4b0 100%);
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.image-nav-buttons {
+.gallery-nav {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.nav-button {
+.main-image-wrapper:hover .gallery-nav {
+  opacity: 1;
+}
+
+.nav-arrow {
   pointer-events: all;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 50%;
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  color: #5c524a;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 50%;
+  transition: all 0.2s;
 }
 
-.nav-button:hover {
-  background: white;
-  transform: scale(1.1);
-  color: #c4936a;
+.nav-arrow:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.05);
 }
 
 .image-counter {
   position: absolute;
   bottom: 1rem;
-  right: 1rem;
-  background: rgba(92, 82, 74, 0.9);
-  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border-radius: 1.5rem;
-  font-size: 0.875rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 2rem;
+  color: white;
+  font-size: 0.85rem;
   font-weight: 500;
 }
 
-.thumbnail-gallery {
+.counter-divider {
+  opacity: 0.5;
+}
+
+.thumbnail-strip {
   display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
+  gap: 0.5rem;
   overflow-x: auto;
-  padding: 0.5rem 0;
+  padding: 0.25rem 0;
+}
+
+.thumbnail-strip::-webkit-scrollbar {
+  height: 4px;
+}
+
+.thumbnail-strip::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.thumbnail-strip::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
 }
 
 .thumbnail {
   flex-shrink: 0;
   width: 80px;
-  height: 80px;
-  border-radius: 1rem;
+  height: 60px;
+  border-radius: 0.25rem;
   overflow: hidden;
-  border: 3px solid transparent;
-  transition: all 0.3s;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  border: 2px solid transparent;
 }
 
 .thumbnail:hover {
-  border-color: #c4936a;
+  opacity: 0.8;
 }
 
 .thumbnail-active {
-  border-color: #c4936a;
-  box-shadow: 0 0 0 3px rgba(196, 147, 106, 0.2);
+  opacity: 1;
+  border-color: white;
 }
 
-.thumbnail-img {
+.thumbnail img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.details-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 1.5rem;
+/* Right Description */
+.project-description {
+  position: sticky;
+  top: 4rem;
+  height: fit-content;
 }
 
-.detail-item {
+.description-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.description-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.features-section,
+.certifications-section {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.features-title,
+.certifications-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 1rem;
+}
+
+.features-list,
+.certifications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.detail-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #8a847e;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.features-list li,
+.certifications-list li {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  padding-left: 1rem;
+  position: relative;
 }
 
-.detail-value {
-  font-size: 1rem;
-  color: #2e2a26;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-}
-
-.type-badge {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: rgba(196, 147, 106, 0.15);
-  color: #a67b52;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.status-completed {
-  background: rgba(168, 181, 160, 0.2);
-  color: #8a9b80;
-}
-
-.status-ongoing {
-  background: rgba(196, 147, 106, 0.15);
-  color: #a67b52;
-}
-
-.status-upcoming {
-  background: rgba(92, 82, 74, 0.1);
-  color: #5c524a;
-}
-
-.certifications-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.certification-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 1rem;
-  border-left: 3px solid #c4936a;
-}
-
-.features-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 0.75rem;
-}
-
-.feature-item {
-  display: flex;
-  align-items: start;
-  gap: 0.75rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 1rem;
-  color: #5a544e;
-}
-
-.feature-check {
-  width: 24px;
-  height: 24px;
-  background: rgba(168, 181, 160, 0.2);
+.features-list li::before,
+.certifications-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 4px;
+  height: 4px;
+  background: #c4936a;
   border-radius: 50%;
+}
+
+/* Mobile Layout */
+.modal-content-mobile {
+  display: block;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .modal-content-mobile {
+    display: none;
+  }
+}
+
+.mobile-header {
+  padding: 1.5rem;
+  padding-top: 5rem;
+  text-align: center;
+}
+
+.mobile-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 0.25rem;
+}
+
+.mobile-location {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.mobile-gallery {
+  padding: 0 1rem;
+}
+
+.mobile-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.mobile-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-placeholder {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  color: #8a9b80;
 }
 
-/* Modal Transition */
+.mobile-gallery-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+.mobile-nav-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+}
+
+.mobile-counter {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.mobile-thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+.mobile-thumb {
+  flex-shrink: 0;
+  width: 60px;
+  height: 45px;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  border: 2px solid transparent;
+}
+
+.mobile-thumb-active {
+  opacity: 1;
+  border-color: white;
+}
+
+.mobile-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-info {
+  padding: 1.5rem;
+}
+
+.mobile-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.mobile-meta-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mobile-meta-value {
+  font-size: 0.875rem;
+  color: white;
+}
+
+.mobile-description {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-description p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mobile-features,
+.mobile-certifications {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-features h3,
+.mobile-certifications h3 {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.75rem;
+}
+
+.mobile-features ul,
+.mobile-certifications ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.mobile-features li,
+.mobile-certifications li {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  padding-left: 0.875rem;
+  position: relative;
+}
+
+.mobile-features li::before,
+.mobile-certifications li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 4px;
+  height: 4px;
+  background: #c4936a;
+  border-radius: 50%;
+}
+
+/* Transitions */
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.3s ease;
@@ -508,42 +846,18 @@ if (typeof window !== 'undefined') {
   opacity: 0;
 }
 
-.modal-enter-active .modal-container,
-.modal-leave-active .modal-container {
-  transition: transform 0.3s ease;
+.modal-enter-active .modal-content,
+.modal-enter-active .modal-content-mobile,
+.modal-leave-active .modal-content,
+.modal-leave-active .modal-content-mobile {
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
-  transform: scale(0.95) translateY(20px);
-}
-
-@media (max-width: 768px) {
-  .modal-container {
-    border-radius: 1.5rem;
-  }
-
-  .modal-header {
-    padding: 1rem 1.5rem;
-    border-radius: 1.5rem 1.5rem 0 0;
-  }
-
-  .modal-body {
-    padding: 1.5rem;
-  }
-
-  .main-image-container {
-    height: 280px;
-    border-radius: 1rem;
-  }
-
-  .details-grid {
-    grid-template-columns: 1fr;
-    border-radius: 1rem;
-  }
-
-  .features-list {
-    grid-template-columns: 1fr;
-  }
+.modal-enter-from .modal-content,
+.modal-enter-from .modal-content-mobile,
+.modal-leave-to .modal-content,
+.modal-leave-to .modal-content-mobile {
+  transform: translateY(20px);
+  opacity: 0;
 }
 </style>
