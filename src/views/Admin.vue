@@ -16,12 +16,12 @@
     <!-- Tabs -->
     <div class="bg-white border-b">
       <div class="max-w-7xl mx-auto px-6">
-        <nav class="flex gap-8">
+        <nav class="flex gap-8 overflow-x-auto">
           <button
             v-for="tab in tabs"
             :key="tab.id"
             @click="activeTab = tab.id"
-            class="py-4 text-sm font-medium border-b-2 transition-colors"
+            class="py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap"
             :class="activeTab === tab.id ? 'border-clay text-clay' : 'border-transparent text-text-medium hover:text-text-dark'"
           >
             {{ tab.name }}
@@ -38,18 +38,18 @@
         <p class="mt-4 text-text-medium">Loading...</p>
       </div>
 
-      <!-- Site Content Tab -->
-      <div v-else-if="activeTab === 'content'" class="space-y-8">
+      <!-- Hero Section Tab -->
+      <div v-else-if="activeTab === 'hero'" class="space-y-6">
         <div class="bg-white rounded-2xl p-6 shadow-sm">
           <h2 class="font-display text-xl mb-6">Hero Section</h2>
           <div class="grid gap-4">
             <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Title</label>
-              <input v-model="content.hero_title" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Hero title">
+              <label class="block text-sm font-medium text-text-dark mb-2">Title (First Line)</label>
+              <input v-model="content.hero_title" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Where Nature Meets">
             </div>
             <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Subtitle</label>
-              <input v-model="content.hero_subtitle" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Hero subtitle">
+              <label class="block text-sm font-medium text-text-dark mb-2">Title (Highlighted)</label>
+              <input v-model="content.hero_subtitle" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Structure">
             </div>
             <div>
               <label class="block text-sm font-medium text-text-dark mb-2">Description</label>
@@ -59,37 +59,121 @@
         </div>
 
         <div class="bg-white rounded-2xl p-6 shadow-sm">
-          <h2 class="font-display text-xl mb-6">About Section</h2>
-          <div class="grid gap-4">
-            <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Introduction</label>
-              <textarea v-model="content.about_intro" rows="4" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="About introduction"></textarea>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Vision Title</label>
-              <input v-model="content.about_vision_title" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Vision title">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Vision Description</label>
-              <textarea v-model="content.about_vision_text" rows="4" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Vision description"></textarea>
+          <h2 class="font-display text-xl mb-6">Statistics</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div v-for="(stat, index) in content.stats" :key="index" class="border border-sand rounded-xl p-4">
+              <label class="block text-xs font-medium text-text-light mb-1">Number</label>
+              <input v-model="stat.number" class="w-full px-3 py-2 border border-sand rounded-lg text-lg font-display mb-2" placeholder="25+">
+              <label class="block text-xs font-medium text-text-light mb-1">Label</label>
+              <input v-model="stat.label" class="w-full px-3 py-2 border border-sand rounded-lg text-sm" placeholder="Years of Excellence">
             </div>
           </div>
         </div>
 
         <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <h2 class="font-display text-xl mb-6">Services / Expertise (Home Page)</h2>
+          <div class="space-y-4">
+            <div v-for="(service, index) in content.services" :key="index" class="border border-sand rounded-xl p-4">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-sm font-medium text-text-dark">Service {{ index + 1 }}</span>
+                <select v-model="service.icon" class="px-3 py-1 border border-sand rounded-lg text-sm">
+                  <option value="home">Home Icon</option>
+                  <option value="building">Building Icon</option>
+                  <option value="landmark">Landmark Icon</option>
+                </select>
+              </div>
+              <input v-model="service.title" class="w-full px-3 py-2 border border-sand rounded-lg mb-2" placeholder="Service Title">
+              <textarea v-model="service.description" rows="2" class="w-full px-3 py-2 border border-sand rounded-lg text-sm" placeholder="Service description"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end">
+          <button @click="saveContent" :disabled="saving" class="px-8 py-3 bg-earth text-white rounded-full font-medium hover:bg-clay transition-colors disabled:opacity-50">
+            {{ saving ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- About Page Tab -->
+      <div v-else-if="activeTab === 'about'" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <h2 class="font-display text-xl mb-6">Introduction</h2>
+          <div>
+            <label class="block text-sm font-medium text-text-dark mb-2">About Introduction Text</label>
+            <textarea v-model="content.about_intro" rows="4" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Company introduction"></textarea>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <h2 class="font-display text-xl mb-6">Our Vision</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-text-dark mb-2">Vision Title</label>
+              <input v-model="content.about_vision_title" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Our Vision">
+            </div>
+            <div v-for="(para, index) in content.about_vision_paragraphs" :key="index">
+              <label class="block text-sm font-medium text-text-dark mb-2">Paragraph {{ index + 1 }}</label>
+              <textarea v-model="content.about_vision_paragraphs[index]" rows="3" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Vision paragraph"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <h2 class="font-display text-xl mb-6">Core Values</h2>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div v-for="(value, index) in content.values" :key="index" class="border border-sand rounded-xl p-4">
+              <input v-model="value.title" class="w-full px-3 py-2 border border-sand rounded-lg mb-2 font-medium" placeholder="Value Title">
+              <textarea v-model="value.description" rows="2" class="w-full px-3 py-2 border border-sand rounded-lg text-sm" placeholder="Value description"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <h2 class="font-display text-xl mb-6">Our Expertise</h2>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div v-for="(exp, index) in content.expertise" :key="index" class="border border-sand rounded-xl p-4">
+              <input v-model="exp.title" class="w-full px-3 py-2 border border-sand rounded-lg mb-2 font-medium" placeholder="Expertise Title">
+              <textarea v-model="exp.description" rows="2" class="w-full px-3 py-2 border border-sand rounded-lg text-sm" placeholder="Expertise description"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <h2 class="font-display text-xl mb-6">Timeline Statistics</h2>
+          <div class="grid md:grid-cols-4 gap-4">
+            <div v-for="(item, index) in content.timeline" :key="index" class="border border-sand rounded-xl p-4">
+              <label class="block text-xs font-medium text-text-light mb-1">Number</label>
+              <input v-model="item.number" class="w-full px-3 py-2 border border-sand rounded-lg text-lg font-display mb-2" placeholder="1999">
+              <label class="block text-xs font-medium text-text-light mb-1">Label</label>
+              <input v-model="item.label" class="w-full px-3 py-2 border border-sand rounded-lg text-sm" placeholder="Founded">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end">
+          <button @click="saveContent" :disabled="saving" class="px-8 py-3 bg-earth text-white rounded-full font-medium hover:bg-clay transition-colors disabled:opacity-50">
+            {{ saving ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Contact Tab -->
+      <div v-else-if="activeTab === 'contact'" class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
           <h2 class="font-display text-xl mb-6">Contact Information</h2>
           <div class="grid md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Email</label>
+              <label class="block text-sm font-medium text-text-dark mb-2">Email Address</label>
               <input v-model="content.contact_email" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="info@example.com">
             </div>
             <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Phone</label>
-              <input v-model="content.contact_phone" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="+91 1234567890">
+              <label class="block text-sm font-medium text-text-dark mb-2">Phone Number</label>
+              <input v-model="content.contact_phone" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="+91 22 1234 5678">
             </div>
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-text-dark mb-2">Address</label>
-              <input v-model="content.contact_address" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Business address">
+              <input v-model="content.contact_address" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="Mumbai, Maharashtra, India">
             </div>
           </div>
         </div>
@@ -113,7 +197,7 @@
         <div class="grid gap-4">
           <div v-for="project in projects" :key="project.id" class="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-6">
             <div class="w-24 h-24 bg-sand rounded-xl overflow-hidden flex-shrink-0">
-              <img v-if="project.image" :src="project.image" class="w-full h-full object-cover" :alt="project.name">
+              <img v-if="project.images && project.images[0]" :src="project.images[0]" class="w-full h-full object-cover" :alt="project.name">
               <div v-else class="w-full h-full flex items-center justify-center text-text-light">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -123,7 +207,10 @@
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="font-medium text-text-dark truncate">{{ project.name }}</h3>
+              <div class="flex items-center gap-2">
+                <h3 class="font-medium text-text-dark truncate">{{ project.name }}</h3>
+                <span v-if="project.featured" class="px-2 py-0.5 bg-clay text-white text-xs rounded-full">Featured</span>
+              </div>
               <p class="text-sm text-text-medium">{{ project.location }}</p>
               <span class="inline-block mt-2 px-3 py-1 bg-clay/10 text-clay text-xs rounded-full">{{ project.type }}</span>
             </div>
@@ -158,7 +245,7 @@
             <div class="flex justify-between items-start mb-4">
               <div>
                 <h3 class="font-medium text-text-dark">{{ submission.name }}</h3>
-                <p class="text-sm text-text-medium">{{ submission.email }} • {{ submission.phone || 'No phone' }}</p>
+                <p class="text-sm text-text-medium">{{ submission.email }} | {{ submission.phone || 'No phone' }}</p>
               </div>
               <div class="flex items-center gap-2">
                 <span class="text-xs text-text-light">{{ formatDate(submission.created_at) }}</span>
@@ -229,17 +316,31 @@
                 <input v-model="projectForm.completion_date" class="w-full px-4 py-3 border border-sand rounded-xl" placeholder="e.g., December 2024">
               </div>
             </div>
+            <div class="flex items-center gap-3">
+              <input type="checkbox" id="featured" v-model="projectForm.featured" class="w-5 h-5 rounded border-sand text-clay focus:ring-clay">
+              <label for="featured" class="text-sm font-medium text-text-dark">Featured Project (shows on home page)</label>
+            </div>
             <div>
-              <label class="block text-sm font-medium text-text-dark mb-2">Project Image</label>
-              <div class="flex items-center gap-4">
-                <div v-if="projectForm.image" class="w-24 h-24 rounded-xl overflow-hidden">
-                  <img :src="projectForm.image" class="w-full h-full object-cover">
+              <label class="block text-sm font-medium text-text-dark mb-2">Project Images</label>
+              <div class="flex flex-wrap gap-3 mb-3">
+                <div v-for="(img, index) in projectForm.images" :key="index" class="relative w-24 h-24 rounded-xl overflow-hidden group">
+                  <img :src="img" class="w-full h-full object-cover">
+                  <button type="button" @click="removeImage(index)" class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="18" y1="6" x2="6" y2="18"/>
+                      <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </button>
                 </div>
-                <label class="px-4 py-2 border border-clay text-clay rounded-full cursor-pointer hover:bg-clay hover:text-white transition-colors">
-                  <span>{{ projectForm.image ? 'Change Image' : 'Upload Image' }}</span>
-                  <input type="file" accept="image/*" class="hidden" @change="handleImageUpload">
+                <label class="w-24 h-24 border-2 border-dashed border-sand rounded-xl flex items-center justify-center cursor-pointer hover:border-clay transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-light">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  <input type="file" accept="image/*" class="hidden" @change="handleImageUpload" multiple>
                 </label>
               </div>
+              <p class="text-xs text-text-light">First image will be used as the main project image</p>
             </div>
             <div class="flex justify-end gap-4 pt-4">
               <button type="button" @click="showProjectModal = false" class="px-6 py-2 border border-sand rounded-full text-text-medium hover:bg-sand transition-colors">
@@ -271,26 +372,60 @@ const { siteContent, fetchContent, updateContent } = useSiteContent()
 const { submissions, fetchSubmissions, markAsRead, deleteSubmission } = useContact()
 
 const tabs = [
-  { id: 'content', name: 'Site Content' },
+  { id: 'hero', name: 'Home Page' },
+  { id: 'about', name: 'About Page' },
+  { id: 'contact', name: 'Contact Info' },
   { id: 'projects', name: 'Projects' },
   { id: 'messages', name: 'Messages' }
 ]
 
-const activeTab = ref('content')
+const activeTab = ref('hero')
 const loading = ref(true)
 const saving = ref(false)
 const savingProject = ref(false)
 
 const content = ref({
-  hero_title: '',
-  hero_subtitle: '',
-  hero_description: '',
-  about_intro: '',
-  about_vision_title: '',
-  about_vision_text: '',
-  contact_email: '',
-  contact_phone: '',
-  contact_address: ''
+  hero_title: 'Where Nature Meets',
+  hero_subtitle: 'Structure',
+  hero_description: 'Creating harmonious spaces that flow with life. For 25 years, we\'ve designed architecture that breathes with its environment.',
+  stats: [
+    { number: '25+', label: 'Years of Excellence' },
+    { number: '500+', label: 'Projects Completed' },
+    { number: '50+', label: 'Awards Won' },
+    { number: '100%', label: 'Client Satisfaction' }
+  ],
+  services: [
+    { id: 1, icon: 'home', title: 'Residential Design', description: 'Crafting homes that embrace natural light and organic flow, creating spaces where families thrive.' },
+    { id: 2, icon: 'building', title: 'Commercial Spaces', description: 'Designing workspaces that inspire productivity while maintaining harmony with the environment.' },
+    { id: 3, icon: 'landmark', title: 'Government Projects', description: 'Creating public buildings that serve communities with dignity and architectural excellence.' }
+  ],
+  about_intro: 'M/s CHAMANKAR GROUP is a reputed & trusted name in the construction industry since more than 25 years.',
+  about_vision_title: 'Our Vision',
+  about_vision_paragraphs: [
+    'Aspiring for world class living standards and contemporary work places come within reach of all.',
+    'Our aim is setting up of comfortable and luxurious dwelling spheres.',
+    'We create infrastructure which is a perfect blend of beauty and strength.'
+  ],
+  values: [
+    { id: 1, title: 'Excellence', description: 'Committed to delivering exceptional quality in every project we undertake.' },
+    { id: 2, title: 'Innovation', description: 'Pioneering new trends and expanding horizons in construction.' },
+    { id: 3, title: 'Trust', description: 'Building lasting relationships based on reliability and integrity.' },
+    { id: 4, title: 'Sustainability', description: 'Creating spaces that respect and harmonize with nature.' }
+  ],
+  expertise: [
+    { id: 1, title: 'Residential', description: 'Creating luxurious living spaces that become perfect homes for families.' },
+    { id: 2, title: 'Commercial', description: 'Developing modern workspaces that inspire productivity and success.' },
+    { id: 3, title: 'Government', description: 'Delivering prestigious government projects with architectural excellence.' }
+  ],
+  timeline: [
+    { number: '1999', label: 'Founded' },
+    { number: '150+', label: 'Projects' },
+    { number: '40+', label: 'Awards' },
+    { number: '200+', label: 'Team Members' }
+  ],
+  contact_email: 'info@chamankar.com',
+  contact_phone: '+91 22 1234 5678',
+  contact_address: 'Mumbai, Maharashtra, India'
 })
 
 const showProjectModal = ref(false)
@@ -302,7 +437,8 @@ const projectForm = ref({
   description: '',
   status: '',
   completion_date: '',
-  image: ''
+  featured: false,
+  images: []
 })
 
 onMounted(async () => {
@@ -319,7 +455,16 @@ onMounted(async () => {
   ])
 
   if (siteContent.value) {
-    content.value = { ...content.value, ...siteContent.value }
+    content.value = {
+      ...content.value,
+      ...siteContent.value,
+      stats: siteContent.value.stats || content.value.stats,
+      services: siteContent.value.services || content.value.services,
+      about_vision_paragraphs: siteContent.value.about_vision_paragraphs || content.value.about_vision_paragraphs,
+      values: siteContent.value.values || content.value.values,
+      expertise: siteContent.value.expertise || content.value.expertise,
+      timeline: siteContent.value.timeline || content.value.timeline
+    }
   }
 
   loading.value = false
@@ -345,7 +490,10 @@ const saveContent = async () => {
 const openProjectModal = (project = null) => {
   editingProject.value = project
   if (project) {
-    projectForm.value = { ...project }
+    projectForm.value = {
+      ...project,
+      images: project.images || []
+    }
   } else {
     projectForm.value = {
       name: '',
@@ -354,22 +502,30 @@ const openProjectModal = (project = null) => {
       description: '',
       status: '',
       completion_date: '',
-      image: ''
+      featured: false,
+      images: []
     }
   }
   showProjectModal.value = true
 }
 
 const handleImageUpload = async (event) => {
-  const file = event.target.files[0]
-  if (!file) return
+  const files = event.target.files
+  if (!files.length) return
 
-  try {
-    const url = await uploadImage(file)
-    projectForm.value.image = url
-  } catch (error) {
-    alert('Error uploading image: ' + error.message)
+  for (const file of files) {
+    try {
+      const url = await uploadImage(file)
+      projectForm.value.images.push(url)
+    } catch (error) {
+      alert('Error uploading image: ' + error.message)
+    }
   }
+  event.target.value = ''
+}
+
+const removeImage = (index) => {
+  projectForm.value.images.splice(index, 1)
 }
 
 const saveProject = async () => {

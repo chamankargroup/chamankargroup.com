@@ -121,21 +121,9 @@
           <h2 class="font-display text-4xl md:text-5xl font-normal mb-5">25+ Years of Excellence</h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div class="bg-white/10 rounded-2xl p-8">
-            <div class="font-display text-5xl text-clay mb-3">1999</div>
-            <div class="text-white/70">Founded</div>
-          </div>
-          <div class="bg-white/10 rounded-2xl p-8">
-            <div class="font-display text-5xl text-clay mb-3">150+</div>
-            <div class="text-white/70">Projects</div>
-          </div>
-          <div class="bg-white/10 rounded-2xl p-8">
-            <div class="font-display text-5xl text-clay mb-3">40+</div>
-            <div class="text-white/70">Awards</div>
-          </div>
-          <div class="bg-white/10 rounded-2xl p-8">
-            <div class="font-display text-5xl text-clay mb-3">200+</div>
-            <div class="text-white/70">Team Members</div>
+          <div v-for="item in timeline" :key="item.label" class="bg-white/10 rounded-2xl p-8">
+            <div class="font-display text-5xl text-clay mb-3">{{ item.number }}</div>
+            <div class="text-white/70">{{ item.label }}</div>
           </div>
         </div>
       </div>
@@ -166,6 +154,13 @@ import { ref, onMounted } from 'vue'
 import { useSiteContent } from '@/composables/useSiteContent'
 
 const { siteContent, fetchContent } = useSiteContent()
+
+const timeline = ref([
+  { number: '1999', label: 'Founded' },
+  { number: '150+', label: 'Projects' },
+  { number: '40+', label: 'Awards' },
+  { number: '200+', label: 'Team Members' }
+])
 
 const content = ref({
   about: {
@@ -206,6 +201,9 @@ onMounted(async () => {
         values: siteContent.value.values || content.value.about.values,
         expertise: siteContent.value.expertise || content.value.about.expertise
       }
+    }
+    if (siteContent.value.timeline) {
+      timeline.value = siteContent.value.timeline
     }
   }
 })

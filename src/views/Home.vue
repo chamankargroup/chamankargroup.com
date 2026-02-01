@@ -210,14 +210,14 @@ const content = ref({
   }
 })
 
-const stats = [
+const stats = ref([
   { number: '25+', label: 'Years of Excellence' },
   { number: '500+', label: 'Projects Completed' },
   { number: '50+', label: 'Awards Won' },
   { number: '100%', label: 'Client Satisfaction' }
-]
+])
 
-const services = [
+const services = ref([
   {
     id: 1,
     icon: 'home',
@@ -236,7 +236,7 @@ const services = [
     title: 'Government Projects',
     description: 'Creating public buildings that serve communities with dignity and architectural excellence.'
   }
-]
+])
 
 const featuredProjects = computed(() => {
   return projects.value.filter(p => p.featured).slice(0, 3)
@@ -252,6 +252,12 @@ onMounted(async () => {
         titleHighlight: siteContent.value.hero_subtitle || content.value.hero.titleHighlight,
         description: siteContent.value.hero_description || content.value.hero.description
       }
+    }
+    if (siteContent.value.stats) {
+      stats.value = siteContent.value.stats
+    }
+    if (siteContent.value.services) {
+      services.value = siteContent.value.services
     }
   }
 })

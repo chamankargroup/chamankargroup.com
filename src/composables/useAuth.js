@@ -19,6 +19,7 @@ export function useAuth() {
     const { error } = await supabase.auth.signOut()
     if (error) throw error
     user.value = null
+    localStorage.removeItem('adminAuth')
   }
 
   const getUser = async () => {

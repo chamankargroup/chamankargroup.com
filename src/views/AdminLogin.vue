@@ -83,6 +83,7 @@ const handleLogin = async () => {
 
   try {
     await login(credentials.value.email, credentials.value.password)
+    localStorage.setItem('adminAuth', 'true')
     successMessage.value = 'Login successful! Redirecting...'
     setTimeout(() => {
       router.replace('/admin')
