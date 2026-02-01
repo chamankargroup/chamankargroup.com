@@ -43,13 +43,17 @@
           <p class="text-text-light text-sm sm:text-base">Projects will be added soon.</p>
         </div>
 
-        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <Transition v-else name="tab-fade" mode="out-in">
           <div
-            v-for="project in filteredProjects"
-            :key="project.id"
-            @click="openProjectModal(project)"
-            class="organic-card cursor-pointer overflow-hidden group"
+            :key="activeFilter"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
           >
+            <div
+              v-for="project in filteredProjects"
+              :key="project.id"
+              @click="openProjectModal(project)"
+              class="organic-card cursor-pointer overflow-hidden group"
+            >
             <!-- Project Image -->
             <div class="aspect-[4/3] overflow-hidden bg-sand relative rounded-t-2xl sm:rounded-t-3xl">
               <img
@@ -101,6 +105,7 @@
             </div>
           </div>
         </div>
+        </Transition>
       </div>
     </section>
 
@@ -185,5 +190,16 @@ onMounted(() => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Tab switch animation */
+.tab-fade-enter-active,
+.tab-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.tab-fade-enter-from,
+.tab-fade-leave-to {
+  opacity: 0;
 }
 </style>

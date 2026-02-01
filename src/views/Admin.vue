@@ -556,10 +556,18 @@ const removeImage = (index) => {
 const saveProject = async () => {
   savingProject.value = true
   try {
-    if (editingProject.value) {
+    // Check if editing a real DB project (has valid UUID) or a sample project
+    const isSampleProject = editingProject.value?.id?.toString().startsWith('sample-')
+
+    if (editingProject.value && !isSampleProject) {
+      // Update existing DB project
       await updateProject(editingProject.value.id, projectForm.value)
     } else {
-      await createProject(projectForm.value)
+      // Create new project (either new or from sample)
+      // Remove the sample ID if present
+      const projectData = { ...projectForm.value }
+      delete projectData.id
+      await createProject(projectData)
     }
     showProjectModal.value = false
   } catch (error) {
