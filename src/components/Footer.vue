@@ -5,7 +5,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <!-- Brand Column -->
         <div class="lg:col-span-1">
-          <h3 class="font-display text-3xl mb-5">Chamankar</h3>
+          <h3 class="font-display text-3xl mb-5">Chamankar Group</h3>
           <p class="text-white/60 text-sm leading-relaxed">
             Creating harmonious architecture that flows with life. Award-winning design studio based in Mumbai.
           </p>
