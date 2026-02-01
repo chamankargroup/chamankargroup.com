@@ -163,7 +163,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { loadContent } from '@/utils/contentManager'
+import { useSiteContent } from '@/composables/useSiteContent'
+
+const { siteContent, fetchContent } = useSiteContent()
 
 const content = ref({
   about: {
@@ -190,10 +192,21 @@ const content = ref({
   }
 })
 
-onMounted(() => {
-  const loadedContent = loadContent()
-  if (loadedContent && loadedContent.about) {
-    content.value = loadedContent
+onMounted(async () => {
+  await fetchContent()
+
+  if (siteContent.value) {
+    content.value = {
+      about: {
+        intro: siteContent.value.about_intro || content.value.about.intro,
+        vision: {
+          title: siteContent.value.about_vision_title || content.value.about.vision.title,
+          paragraphs: siteContent.value.about_vision_paragraphs || content.value.about.vision.paragraphs
+        },
+        values: siteContent.value.values || content.value.about.values,
+        expertise: siteContent.value.expertise || content.value.about.expertise
+      }
+    }
   }
 })
 </script>

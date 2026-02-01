@@ -13,13 +13,13 @@
 
           <!-- Title -->
           <h1 class="font-display text-5xl md:text-7xl font-normal leading-tight mb-7">
-            Where Nature Meets
-            <span class="text-clay">Structure</span>
+            {{ content.hero.title }}
+            <span class="text-clay">{{ content.hero.titleHighlight }}</span>
           </h1>
 
           <!-- Description -->
           <p class="text-lg md:text-xl text-text-medium leading-relaxed mb-12">
-            Creating harmonious spaces that flow with life. For 25 years, we've designed architecture that breathes with its environment.
+            {{ content.hero.description }}
           </p>
 
           <!-- Buttons -->
@@ -68,12 +68,18 @@
             :key="project.id"
             class="organic-card cursor-pointer overflow-hidden"
           >
-            <div class="aspect-[4/3] bg-gradient-to-br from-sand to-sand-dark flex items-center justify-center rounded-t-3xl">
-              <span class="text-text-light text-xs tracking-widest uppercase">Project Image</span>
+            <div class="aspect-[4/3] bg-gradient-to-br from-sand to-sand-dark flex items-center justify-center rounded-t-3xl overflow-hidden">
+              <img
+                v-if="project.images && project.images.length > 0"
+                :src="project.images[0]"
+                :alt="project.name"
+                class="w-full h-full object-cover"
+              />
+              <span v-else class="text-text-light text-xs tracking-widest uppercase">Project Image</span>
             </div>
             <div class="p-7">
               <span class="inline-block px-4 py-1.5 bg-clay/15 rounded-full text-xs font-semibold text-clay-dark uppercase tracking-wide mb-3">
-                {{ project.category }}
+                {{ project.type }}
               </span>
               <h3 class="font-display text-2xl font-medium mb-2">{{ project.name }}</h3>
               <p class="text-text-light text-sm">{{ project.location }}</p>
@@ -189,47 +195,64 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { loadContent } from '@/utils/contentManager'
-import siteContent from '@/data/siteContent.json'
+import { ref, computed, onMounted } from 'vue'
+import { useSiteContent } from '@/composables/useSiteContent'
+import { useProjects } from '@/composables/useProjects'
+
+const { siteContent, fetchContent } = useSiteContent()
+const { projects, fetchProjects } = useProjects()
 
 const content = ref({
-  hero: siteContent.hero,
-  whyChoose: siteContent.whyChoose
+  hero: {
+    title: 'Where Nature Meets',
+    titleHighlight: 'Structure',
+    description: 'Creating harmonious spaces that flow with life. For 25 years, we\'ve designed architecture that breathes with its environment.'
+  }
 })
 
-const stats = siteContent.stats
+const stats = [
+  { number: '25+', label: 'Years of Excellence' },
+  { number: '500+', label: 'Projects Completed' },
+  { number: '50+', label: 'Awards Won' },
+  { number: '100%', label: 'Client Satisfaction' }
+]
 
-const services = siteContent.services
-
-const featuredProjects = [
+const services = [
   {
     id: 1,
-    name: 'New Maharashtra Sadan',
-    location: 'New Delhi',
-    category: 'Government',
-    description: 'A prestigious government project showcasing architectural excellence.'
+    icon: 'home',
+    title: 'Residential Design',
+    description: 'Crafting homes that embrace natural light and organic flow, creating spaces where families thrive.'
   },
   {
     id: 2,
-    name: 'Epitome at Pali Hill',
-    location: 'Bandra West, Mumbai',
-    category: 'Residential',
-    description: 'Luxurious residential tower in the heart of Bandra.'
+    icon: 'building',
+    title: 'Commercial Spaces',
+    description: 'Designing workspaces that inspire productivity while maintaining harmony with the environment.'
   },
   {
     id: 3,
-    name: 'Andheri RTO',
-    location: 'Andheri, Mumbai',
-    category: 'Government',
-    description: 'Modern government building with state-of-the-art facilities.'
+    icon: 'landmark',
+    title: 'Government Projects',
+    description: 'Creating public buildings that serve communities with dignity and architectural excellence.'
   }
 ]
 
-onMounted(() => {
-  const loadedContent = loadContent()
-  if (loadedContent) {
-    content.value = { ...content.value, ...loadedContent }
+const featuredProjects = computed(() => {
+  return projects.value.filter(p => p.featured).slice(0, 3)
+})
+
+onMounted(async () => {
+  await Promise.all([fetchContent(), fetchProjects()])
+
+  if (siteContent.value) {
+    content.value = {
+      hero: {
+        title: siteContent.value.hero_title || content.value.hero.title,
+        titleHighlight: siteContent.value.hero_subtitle || content.value.hero.titleHighlight,
+        description: siteContent.value.hero_description || content.value.hero.description
+      }
+    }
   }
 })
 </script>

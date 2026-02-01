@@ -82,9 +82,10 @@
 
               <button
                 type="submit"
-                class="w-full py-4 bg-earth text-white font-medium rounded-full hover:bg-clay transition-all"
+                :disabled="isSubmitting"
+                class="w-full py-4 bg-earth text-white font-medium rounded-full hover:bg-clay transition-all disabled:bg-text-light disabled:cursor-not-allowed"
               >
-                Send Message
+                {{ isSubmitting ? 'Sending...' : 'Send Message' }}
               </button>
 
               <div v-if="submitMessage" :class="submitSuccess ? 'text-sage-dark' : 'text-clay-dark'" class="text-center font-medium bg-white rounded-xl p-4">
@@ -108,7 +109,7 @@
                 </div>
                 <div>
                   <h3 class="font-medium text-text-dark text-lg mb-1">Address</h3>
-                  <p class="text-text-medium">Mumbai, Maharashtra, India</p>
+                  <p class="text-text-medium">{{ contactInfo.address }}</p>
                 </div>
               </div>
 
@@ -122,7 +123,7 @@
                 </div>
                 <div>
                   <h3 class="font-medium text-text-dark text-lg mb-1">Email</h3>
-                  <a href="mailto:info@chamankar.com" class="text-text-medium hover:text-clay transition-colors">info@chamankar.com</a>
+                  <a :href="'mailto:' + contactInfo.email" class="text-text-medium hover:text-clay transition-colors">{{ contactInfo.email }}</a>
                 </div>
               </div>
 
@@ -135,7 +136,7 @@
                 </div>
                 <div>
                   <h3 class="font-medium text-text-dark text-lg mb-1">Phone</h3>
-                  <a href="tel:+912212345678" class="text-text-medium hover:text-clay transition-colors">+91 22 1234 5678</a>
+                  <a :href="'tel:' + contactInfo.phone.replace(/\s/g, '')" class="text-text-medium hover:text-clay transition-colors">{{ contactInfo.phone }}</a>
                 </div>
               </div>
 
@@ -234,7 +235,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useContact } from '@/composables/useContact'
+import { useSiteContent } from '@/composables/useSiteContent'
+
+const { submitContact } = useContact()
+const { siteContent, fetchContent } = useSiteContent()
 
 const formData = ref({
   name: '',
@@ -244,36 +250,57 @@ const formData = ref({
   message: ''
 })
 
+const contactInfo = ref({
+  address: 'Mumbai, Maharashtra, India',
+  email: 'info@chamankar.com',
+  phone: '+91 22 1234 5678'
+})
+
 const submitMessage = ref('')
 const submitSuccess = ref(false)
+const isSubmitting = ref(false)
 
-const submitForm = () => {
-  // Store form submission in localStorage
-  const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]')
-  submissions.push({
-    ...formData.value,
-    timestamp: new Date().toISOString()
-  })
-  localStorage.setItem('contactSubmissions', JSON.stringify(submissions))
+const submitForm = async () => {
+  isSubmitting.value = true
+  try {
+    await submitContact(formData.value)
 
-  // Show success message
-  submitSuccess.value = true
-  submitMessage.value = 'Thank you for your message! We will get back to you soon.'
+    // Show success message
+    submitSuccess.value = true
+    submitMessage.value = 'Thank you for your message! We will get back to you soon.'
 
-  // Reset form
-  formData.value = {
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
+    // Reset form
+    formData.value = {
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: ''
+    }
+  } catch (error) {
+    submitSuccess.value = false
+    submitMessage.value = 'Sorry, there was an error sending your message. Please try again.'
+    console.error('Contact form error:', error)
+  } finally {
+    isSubmitting.value = false
+
+    // Clear message after 5 seconds
+    setTimeout(() => {
+      submitMessage.value = ''
+    }, 5000)
   }
-
-  // Clear message after 5 seconds
-  setTimeout(() => {
-    submitMessage.value = ''
-  }, 5000)
 }
+
+onMounted(async () => {
+  await fetchContent()
+  if (siteContent.value) {
+    contactInfo.value = {
+      address: siteContent.value.contact_address || contactInfo.value.address,
+      email: siteContent.value.contact_email || contactInfo.value.email,
+      phone: siteContent.value.contact_phone || contactInfo.value.phone
+    }
+  }
+})
 </script>
 
 <style scoped>

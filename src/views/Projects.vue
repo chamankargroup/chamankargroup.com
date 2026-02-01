@@ -130,8 +130,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import ProjectModal from '../components/ProjectModal.vue'
+import { useProjects } from '@/composables/useProjects'
 
-const projects = ref([])
+const { projects, fetchProjects } = useProjects()
+
 const showModal = ref(false)
 const selectedProject = ref({})
 const activeFilter = ref('All')
@@ -144,90 +146,6 @@ const filteredProjects = computed(() => {
   }
   return projects.value.filter(p => p.type === activeFilter.value)
 })
-
-const loadProjects = () => {
-  const storedProjects = localStorage.getItem('chamankarProjects')
-  if (storedProjects) {
-    projects.value = JSON.parse(storedProjects)
-  } else {
-    // Initialize with sample projects
-    projects.value = [
-      {
-        id: 1,
-        name: 'New Maharashtra Sadan',
-        location: 'New Delhi',
-        description: 'A prestigious government project showcasing architectural excellence and modern design principles.',
-        type: 'Government',
-        image: ''
-      },
-      {
-        id: 2,
-        name: 'Epitome at Pali Hill',
-        location: 'Bandra West, Mumbai',
-        description: 'Luxurious residential tower in the heart of Bandra offering world-class amenities and stunning views.',
-        type: 'Residential',
-        image: ''
-      },
-      {
-        id: 3,
-        name: 'Andheri RTO',
-        location: 'Andheri, Mumbai',
-        description: 'Modern government building with state-of-the-art facilities for streamlined operations.',
-        type: 'Government',
-        image: ''
-      },
-      {
-        id: 4,
-        name: 'High Mount VIP Guest House',
-        location: 'Walkeshwar, Mumbai',
-        description: 'Exclusive VIP government guest house with premium facilities and scenic location.',
-        type: 'Government',
-        image: ''
-      },
-      {
-        id: 5,
-        name: 'Navratna Project',
-        location: 'Santacruz, Mumbai',
-        description: 'Upcoming residential tower with contemporary design and modern living spaces.',
-        type: 'Residential',
-        image: ''
-      },
-      {
-        id: 6,
-        name: 'S.S Sadan JVPD',
-        location: 'Vile Parle, Mumbai',
-        description: 'Premium residential tower in the sought-after JVPD area.',
-        type: 'Residential',
-        image: ''
-      },
-      {
-        id: 7,
-        name: 'Krishna Villa',
-        location: 'Vile Parle, Mumbai',
-        description: 'Elegant residential development combining comfort and style.',
-        type: 'Residential',
-        image: ''
-      },
-      {
-        id: 8,
-        name: 'Versova Aditi CHS LTD',
-        location: 'Andheri 4 Bungalows, Mumbai',
-        description: 'Well-planned residential complex with modern amenities.',
-        type: 'Residential',
-        image: ''
-      },
-      {
-        id: 9,
-        name: 'Asha Apartment',
-        location: 'Vile Parle (E), Mumbai',
-        description: 'Upcoming residential project offering comfortable living spaces.',
-        type: 'Residential',
-        image: ''
-      }
-    ]
-    localStorage.setItem('chamankarProjects', JSON.stringify(projects.value))
-  }
-}
 
 const openProjectModal = (project) => {
   selectedProject.value = project
@@ -257,7 +175,7 @@ const getImageCount = (project) => {
 }
 
 onMounted(() => {
-  loadProjects()
+  fetchProjects()
 })
 </script>
 
